@@ -79,8 +79,9 @@
                   </li>
 
                   @if (Auth::user()->role_id == 1)
-                      <li class="nav-item {{ Request::is(['kecamatan-kelurahan']) ? 'menu-open' : '' }}">
-                          <a href="#" class="nav-link {{ Request::is(['kecamatan-kelurahan']) ? 'active' : '' }}">
+                      <li class="nav-item {{ Request::is(['kecamatan-kelurahan', 'user']) ? 'menu-open' : '' }}">
+                          <a href="#"
+                              class="nav-link {{ Request::is(['kecamatan-kelurahan', 'user']) ? 'active' : '' }}">
                               <i class="nav-icon fas fa-database"></i>
                               <p>
                                   Database
@@ -94,6 +95,14 @@
                                       class="nav-link {{ Request::is('kecamatan-kelurahan') ? 'active' : '' }}">
                                       <i class="fas fa-minus nav-icon"></i>
                                       <p>Kecamtana & Kelurahan</p>
+                                  </a>
+                              </li>
+
+                              <li class="nav-item">
+                                  <a href="{{ route('user') }}"
+                                      class="nav-link {{ Request::is('user') ? 'active' : '' }}">
+                                      <i class="fas fa-minus nav-icon"></i>
+                                      <p>User</p>
                                   </a>
                               </li>
 

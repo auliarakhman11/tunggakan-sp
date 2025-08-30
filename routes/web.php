@@ -69,6 +69,17 @@ Route::middleware('auth')->group(function () {
         Route::get('get-list-kecamatan', [KecamatanKelurahanController::class, 'getListKecamatan'])->name('getListKecamatan');
 
         //end kecamatan keluarahan
+
+        //user
+        Route::get('user', [UserController::class, 'index'])->name('user');
+        Route::get('get-data-user', [UserController::class, 'getDataUser'])->name('getDataUser');
+        Route::post('user', [UserController::class, 'addUser'])->name('addUser');
+
+        Route::get('get-user/{id}', [UserController::class, 'getUser'])->name('getUser');
+
+        Route::post('edit-user', [UserController::class, 'editUser'])->name('editUser');
+        //enduser
+
     });
 
 

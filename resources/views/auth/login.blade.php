@@ -14,7 +14,7 @@
 <body>
     <div class="form-body">
         <div class="website-logo">
-            <a href="index.html">
+            <a href="">
                 <div class="logo">
                     <img class="logo-size" src="{{ asset('img') }}/Logo_BPN-KemenATR.png" alt="">
                 </div>

@@ -20,14 +20,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'username',
-        'seksi_id',
+        'role_id',
         'password',
     ];
-
-    public function seksi()
-    {
-        return $this->belongsTo(Seksi::class,'seksi_id','id');
-    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -47,6 +42,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    
 }
