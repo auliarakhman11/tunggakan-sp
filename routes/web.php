@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::post('editPeta', [PetaController::class, 'editPeta'])->name('editPeta');
     Route::get('deletePeta/{id}', [PetaController::class, 'deletePeta'])->name('deletePeta');
     Route::post('uploadPeta', [PetaController::class, 'uploadPeta'])->name('uploadPeta');
+    Route::get('deleteFilePeta/{id}', [PetaController::class, 'deleteFilePeta'])->name('deleteFilePeta');
     //end peta
 
     Route::middleware('hakakses:1')->group(function () {

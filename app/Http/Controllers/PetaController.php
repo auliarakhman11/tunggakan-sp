@@ -154,6 +154,8 @@ class PetaController extends Controller
             File::delete('scan-file/' . $d->file_name);
         }
 
+        UploadPeta::where('peta_id', $peta_id)->delete();
+
         return true;
     }
 
@@ -197,6 +199,15 @@ class PetaController extends Controller
                 'jenis_file' => $extension3
             ]);
         }
+
+        return true;
+    }
+
+    public function deleteFilePeta($id)
+    {
+        $dt_upload = UploadPeta::where('id', $id)->first();
+        UploadPeta::where('id', $id)->delete();
+        File::delete('scan-file/' . $dt_upload->file_name);
 
         return true;
     }

@@ -210,6 +210,7 @@
 
                 </div>
                 <div class="modal-footer">
+                    <input type="hidden" id="peta_id">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -445,6 +446,7 @@
 
             $(document).on('click', '.btn_download', function() {
                 var peta_id = $(this).attr('peta_id');
+                $('#peta_id').val(peta_id);
 
                 $('#table_download_peta').html(
                     'Loading <div class="ld"><div></div><div></div><div></div></div>');
@@ -627,6 +629,52 @@
                         $("#btn_upload_peta").removeAttr("disabled");
                     }
                 });
+
+            });
+
+
+            $(document).on('click', '.btn_delete_file_peta', function() {
+
+                if (confirm('Apakah anda yakin ingin menghapus data peta?')) {
+                    var id = $(this).attr('upload_id');
+                    $.get('deleteFilePeta/' + id, function(data) {
+
+                        if (data) {
+                            var peta_id = $('#peta_id').val();
+                            $.get('downloadDataPeta/' + peta_id, function(data) {
+                                if (data) {
+                                    $('#table_download_peta').html(data);
+                                } else {
+                                    Swal.fire({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        icon: 'error',
+                                        title: 'Ada masalah'
+                                    });
+
+                                    $('#table_download_peta').html('');
+                                }
+
+                            });
+
+                            Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                icon: 'success',
+                                title: 'Data berhasil dihapus'
+                            });
+
+                        } else {
+
+                        }
+
+
+                    });
+                }
 
             });
 
