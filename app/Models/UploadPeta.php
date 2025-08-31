@@ -10,7 +10,7 @@ class UploadPeta extends Model
     use HasFactory;
 
     protected $table = 'upload_peta';
-    protected $fillable = ['peta_id', 'nm_uplaod', 'file_name', 'jenis_file'];
+    protected $fillable = ['peta_id', 'nm_uplaod', 'file_name', 'jenis_file', 'sesuai_posisi'];
 
     public function peta()
     {

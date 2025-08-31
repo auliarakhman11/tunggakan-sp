@@ -60,25 +60,25 @@
 
                   <li class="nav-item {{ Request::is(['/']) ? 'menu-open' : '' }}">
                       <a href="#" class="nav-link {{ Request::is(['/']) ? 'active' : '' }}">
-                          <i class="nav-icon fas fa-map"></i>
+                          <i class="nav-icon fas fa-chart-line"></i>
                           <p>
-                              Peta
+                              Dashboard
                               <i class="right fas fa-angle-left"></i>
                           </p>
                       </a>
                       <ul class="nav nav-treeview">
 
                           <li class="nav-item">
-                              <a href="{{ route('peta') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
+                              <a href="{{ route('home') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
                                   <i class="fas fa-minus nav-icon"></i>
-                                  <p>List Peta</p>
+                                  <p>Kembali ke Dashboard</p>
                               </a>
                           </li>
 
                       </ul>
                   </li>
 
-                  @if (Auth::user()->role_id == 1)
+                  {{-- @if (Auth::user()->role_id == 1)
                       <li class="nav-item {{ Request::is(['kecamatan-kelurahan', 'user']) ? 'menu-open' : '' }}">
                           <a href="#"
                               class="nav-link {{ Request::is(['kecamatan-kelurahan', 'user']) ? 'active' : '' }}">
@@ -108,7 +108,7 @@
 
                           </ul>
                       </li>
-                  @endif
+                  @endif --}}
 
 
 

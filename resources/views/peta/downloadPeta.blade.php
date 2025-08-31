@@ -8,12 +8,12 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($peta->uploadPeta as $d)
+        @foreach ($peta->uploadPetaScan as $d)
             <tr>
                 <td>{{ $d->nm_uplaod }}</td>
                 <td>{{ $d->jenis_file }}</td>
-                <td><a href="{{ route('downloadFilePeta', $d->file_name) }}" class="btn btn-xs btn-success"><i
-                            class="fas fa-download"></i></a></td>
+                <td><a href="{{ route('downloadFilePeta', $d->file_name) }}" target="_blank"
+                        class="btn btn-xs btn-success"><i class="fas fa-download"></i></a></td>
                 <td><a href="javascript:void(0)" class="btn btn-xs btn-danger btn_delete_file_peta"
                         upload_id="{{ $d->id }}"><i class="fas fa-trash"></i></a>
                 </td>

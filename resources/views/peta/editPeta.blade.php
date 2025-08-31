@@ -18,24 +18,14 @@
     <div class="col-6">
         <div class="form-group">
             <label for="">Kecamatan</label>
-            <select name="kecamatan_id" class="form-control select2bs4" required>
-                @foreach ($kecamatan as $k)
-                    <option value="{{ $k->id }}" {{ $peta->kecamatan_id == $k->id ? 'selected' : '' }}>
-                        {{ $k->nm_kecamatan }}</option>
-                @endforeach
-            </select>
+            <input type="text" class="form-control" name="kecamatan" value="{{ $peta->kecamatan }}">
         </div>
     </div>
 
     <div class="col-6">
         <div class="form-group">
             <label for="">Kelurahan</label>
-            <select name="kelurahan_id" id="kelurahan_id" class="form-control select2bs4" required>
-                @foreach ($kelurahan as $k)
-                    <option value="{{ $k->id }}" {{ $peta->kelurahan_id == $k->id ? 'selected' : '' }}>
-                        {{ $k->nm_kelurahan }}</option>
-                @endforeach
-            </select>
+            <input type="text" class="form-control" name="kelurahan" value="{{ $peta->kelurahan }}">
         </div>
     </div>
 
@@ -55,10 +45,7 @@
     <div class="col-6">
         <div class="form-group">
             <label for="">Jenis Kertas</label>
-            <select name="jenis_kertas" class="form-control" required>
-                <option value="Kertas" {{ $peta->jenis_kertas == 'Kertas' ? 'selected' : '' }}>Kertas</option>
-                <option value="Kalkir" {{ $peta->jenis_kertas == 'Kalkir' ? 'selected' : '' }}>Kalkir</option>
-            </select>
+            <input type="text" class="form-control" name="jenis_kertas" value="{{ $peta->jenis_kertas }}">
         </div>
     </div>
 

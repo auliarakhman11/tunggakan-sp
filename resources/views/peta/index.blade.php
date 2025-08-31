@@ -119,22 +119,14 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="">Kecamatan</label>
-                                    <select name="kecamatan_id" id="kecamatan_id" class="form-control select2bs4" required>
-                                        <option value="">Pilih Kecamatan..</option>
-                                        @foreach ($kecamatan as $k)
-                                            <option value="{{ $k->id }}">{{ $k->nm_kecamatan }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" class="form-control" name="kecamatan">
                                 </div>
                             </div>
 
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="">Kelurahan</label>
-                                    <select name="kelurahan_id" id="kelurahan_id" class="form-control select2bs4" required>
-                                        <option value="">Pilih Kelurahan/Desa..</option>
-
-                                    </select>
+                                    <input type="text" class="form-control" name="kelurahan">
                                 </div>
                             </div>
 
@@ -154,10 +146,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="">Jenis Kertas</label>
-                                    <select name="jenis_kertas" class="form-control" required>
-                                        <option value="Kertas">Kertas</option>
-                                        <option value="Kalkir">Kalkir</option>
-                                    </select>
+                                    <input type="text" class="form-control" name="jenis_kertas">
                                 </div>
                             </div>
 
@@ -325,12 +314,12 @@
                         name: 'peta.jenis_kegiatan'
                     },
                     {
-                        data: 'kecamatan.nm_kecamatan',
-                        name: 'kecamatan.nm_kecamatan'
+                        data: 'kecamatan',
+                        name: 'peta.kecamatan'
                     },
                     {
-                        data: 'kelurahan.nm_kelurahan',
-                        name: 'kelurahan.nm_kelurahan'
+                        data: 'kelurahan',
+                        name: 'peta.kelurahan'
                     },
                     {
                         data: 'tahun_pembuatan',

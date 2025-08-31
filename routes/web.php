@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KecamatanKelurahanController;
 use App\Http\Controllers\PetaController;
 use App\Http\Controllers\UserController;
@@ -31,8 +32,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+    //home
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    //endhome
+
     //peta
-    Route::get('/', [PetaController::class, 'index'])->name('peta');
+    Route::get('peta', [PetaController::class, 'index'])->name('peta');
     Route::get('find-kelurahan/{id}', [PetaController::class, 'findKelurahan'])->name('findKelurahan');
     Route::post('addPeta', [PetaController::class, 'addPeta'])->name('addPeta');
     Route::get('getDataPeta', [PetaController::class, 'getDataPeta'])->name('getDataPeta');
@@ -44,6 +49,20 @@ Route::middleware('auth')->group(function () {
     Route::post('uploadPeta', [PetaController::class, 'uploadPeta'])->name('uploadPeta');
     Route::get('deleteFilePeta/{id}', [PetaController::class, 'deleteFilePeta'])->name('deleteFilePeta');
     //end peta
+
+    //peta sesuai
+    Route::get('petaSesuai', [PetaController::class, 'petaSesuai'])->name('petaSesuai');
+    Route::get('getPetaSesuai', [PetaController::class, 'getPetaSesuai'])->name('getPetaSesuai');
+    Route::post('uploadPetaSesuai', [PetaController::class, 'uploadPetaSesuai'])->name('uploadPetaSesuai');
+    Route::get('downloadDataSesuai/{id}', [PetaController::class, 'downloadDataSesuai'])->name('downloadDataSesuai');
+    //end peta sesuai
+
+    //peta belum
+    Route::get('petaBelum', [PetaController::class, 'petaBelum'])->name('petaBelum');
+    Route::get('getPetaBelum', [PetaController::class, 'getPetaBelum'])->name('getPetaBelum');
+    Route::post('uploadPetaBelum', [PetaController::class, 'uploadPetaBelum'])->name('uploadPetaBelum');
+    Route::get('downloadDataBelum/{id}', [PetaController::class, 'downloadDataBelum'])->name('downloadDataBelum');
+    //end peta belum
 
     Route::middleware('hakakses:1')->group(function () {
         //kecamatan Kelurahan
