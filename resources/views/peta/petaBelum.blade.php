@@ -55,9 +55,9 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="float-left">List Peta Belum Terdudukan</h4>
-                                {{-- <button class="btn btn-primary btn-sm float-right" data-toggle="modal"
+                                <button class="btn btn-primary btn-sm float-right" data-toggle="modal"
                                     data-target="#modal_tambah_peta"><i class="fas fa-plus"></i> Tambah
-                                    Data</button> --}}
+                                    Data</button>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -72,7 +72,7 @@
                                                 <th>Desa/Kelurahan</th>
                                                 <th>Tahun Pembuatan</th>
                                                 <th>Upload/Download</th>
-                                                <th>Belum Didudukan</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -245,17 +245,21 @@
                         <table class="table table-xs">
                             <thead>
                                 <tr>
+                                    <th class="text-center">Nama</th>
                                     <th class="text-center">Upload</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td><input type="text" class="form-control" name="nm_uplaod1"></td>
                                     <td><input type="file" name="file_name1" class="form-control"></td>
                                 </tr>
                                 <tr>
+                                    <td><input type="text" class="form-control" name="nm_uplaod2"></td>
                                     <td><input type="file" name="file_name2" class="form-control"></td>
                                 </tr>
                                 <tr>
+                                    <td><input type="text" class="form-control" name="nm_uplaod3"></td>
                                     <td><input type="file" name="file_name3" class="form-control"></td>
                                 </tr>
                             </tbody>
@@ -326,8 +330,8 @@
                         name: 'btn_upload'
                     },
                     {
-                        data: 'belum',
-                        name: 'belum'
+                        data: 'aksi',
+                        name: 'aksi'
                     }
                 ],
                 order: [],
@@ -364,7 +368,7 @@
                 $('#btn_tambah_peta').html(
                     'Loading <div class="ld"><div></div><div></div><div></div></div>');
                 $.ajax({
-                    url: "{{ route('addPeta') }}",
+                    url: "{{ route('addPetaBelum') }}",
                     method: 'POST',
                     data: new FormData(this),
                     contentType: false,
@@ -461,7 +465,7 @@
                 $('#table_edit_peta').html(
                     'Loading <div class="ld"><div></div><div></div><div></div></div>');
 
-                $.get('geteditPeta/' + peta_id, function(data) {
+                $.get('geteditPetaBelum/' + peta_id, function(data) {
                     if (data) {
                         $('#table_edit_peta').html(data);
                     } else {
@@ -487,7 +491,7 @@
                 $('#btn_edit_peta').html(
                     'Loading <div class="ld"><div></div><div></div><div></div></div>');
                 $.ajax({
-                    url: "{{ route('editPeta') }}",
+                    url: "{{ route('editPetaBelum') }}",
                     method: 'POST',
                     data: new FormData(this),
                     contentType: false,
@@ -540,7 +544,7 @@
 
                 if (confirm('Apakah anda yakin ingin menghapus data peta?')) {
                     var peta_id = $(this).attr('peta_id');
-                    $.get('deletePeta/' + peta_id, function(data) {
+                    $.get('deletePetaBelum/' + peta_id, function(data) {
                         var oTable = $('#table_peta').dataTable(); //inialisasi datatable
                         oTable.fnDraw(false); //reset datatable
 
@@ -625,7 +629,7 @@
 
                 if (confirm('Apakah anda yakin ingin menghapus data peta?')) {
                     var id = $(this).attr('upload_id');
-                    $.get('deleteFilePeta/' + id, function(data) {
+                    $.get('deleteFilePetaBelum/' + id, function(data) {
 
                         if (data) {
                             var peta_id = $('#peta_id').val();

@@ -55,6 +55,11 @@ Route::middleware('auth')->group(function () {
     Route::get('getPetaSesuai', [PetaController::class, 'getPetaSesuai'])->name('getPetaSesuai');
     Route::post('uploadPetaSesuai', [PetaController::class, 'uploadPetaSesuai'])->name('uploadPetaSesuai');
     Route::get('downloadDataSesuai/{id}', [PetaController::class, 'downloadDataSesuai'])->name('downloadDataSesuai');
+    Route::post('addPetaSesuai',[PetaController::class,'addPetaSesuai'])->name('addPetaSesuai');
+    Route::get('geteditPetaSesuai/{id}', [PetaController::class,'geteditPetaSesuai'])->name('geteditPetaSesuai');
+    Route::post('editPetaSesuai',[PetaController::class,'editPetaSesuai'])->name('editPetaSesuai');
+    Route::get('deletePetaSesuai/{id}',[PetaController::class,'deletePetaSesuai'])->name('deletePetaSesuai');
+    Route::get('deleteFilePetaSesuai/{id}',[PetaController::class,'deleteFilePetaSesuai'])->name('deleteFilePetaSesuai');
     //end peta sesuai
 
     //peta belum
@@ -62,6 +67,11 @@ Route::middleware('auth')->group(function () {
     Route::get('getPetaBelum', [PetaController::class, 'getPetaBelum'])->name('getPetaBelum');
     Route::post('uploadPetaBelum', [PetaController::class, 'uploadPetaBelum'])->name('uploadPetaBelum');
     Route::get('downloadDataBelum/{id}', [PetaController::class, 'downloadDataBelum'])->name('downloadDataBelum');
+    Route::post('addPetaBelum',[PetaController::class,'addPetaBelum'])->name('addPetaBelum');
+    Route::post('editPetaBelum',[PetaController::class,'editPetaBelum'])->name('editPetaBelum');
+    Route::get('geteditPetaBelum/{id}',[PetaController::class,'geteditPetaBelum'])->name('geteditPetaBelum');
+    Route::get('deletePetaBelum/{id}',[PetaController::class,'deletePetaBelum'])->name('deletePetaBelum');
+    Route::get('deleteFilePetaBelum/{id}',[PetaController::class,'deleteFilePetaBelum'])->name('deleteFilePetaBelum');
     //end peta belum
 
     Route::middleware('hakakses:1')->group(function () {
@@ -118,6 +128,4 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [AuthController::class, 'login'])->name('login');
 });
 
-//surat kosong
-Route::get('surat-kosong', [SuratController::class, 'suratKosong'])->name('suratKosong');
-//end surat kosong
+
