@@ -87,6 +87,18 @@
                         </div>
                     </div>
 
+                    <div class="col-12 col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-info">
+                                <h4 class="float-left"><b>Catatan</b></h4>
+                            </div>
+                            <div class="card-body">
+                                <h5><b>Jumlah Catatan ({{ $jml_data_scan }})</b></h5>
+                                <a href="{{ route('peta') }}" class="btn btn-primary"><i class="fas fa-box"></i> Lihat</a>
+                            </div>
+                        </div>
+                    </div>
+
                     @if (Auth::user()->role_id == 1)
                         <div class="col-12 col-md-6">
                             <div class="card">
