@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Catatan;
 use App\Models\Peta;
 use App\Models\PetaBelum;
 use App\Models\PetaSesuai;
@@ -18,6 +19,7 @@ class HomeController extends Controller
             'jml_data_scan' => Peta::where('void', 0)->get()->count(),
             'jml_data_sesuai' => PetaSesuai::where('void', 0)->get()->count(),
             'jml_data_tidak' => PetaBelum::where('void', 0)->get()->count(),
+            'jml_catatan' => Catatan::where('void', 0)->get()->count(),
         ]);
     }
 }

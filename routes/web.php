@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KecamatanKelurahanController;
 use App\Http\Controllers\PetaController;
@@ -55,11 +56,11 @@ Route::middleware('auth')->group(function () {
     Route::get('getPetaSesuai', [PetaController::class, 'getPetaSesuai'])->name('getPetaSesuai');
     Route::post('uploadPetaSesuai', [PetaController::class, 'uploadPetaSesuai'])->name('uploadPetaSesuai');
     Route::get('downloadDataSesuai/{id}', [PetaController::class, 'downloadDataSesuai'])->name('downloadDataSesuai');
-    Route::post('addPetaSesuai',[PetaController::class,'addPetaSesuai'])->name('addPetaSesuai');
-    Route::get('geteditPetaSesuai/{id}', [PetaController::class,'geteditPetaSesuai'])->name('geteditPetaSesuai');
-    Route::post('editPetaSesuai',[PetaController::class,'editPetaSesuai'])->name('editPetaSesuai');
-    Route::get('deletePetaSesuai/{id}',[PetaController::class,'deletePetaSesuai'])->name('deletePetaSesuai');
-    Route::get('deleteFilePetaSesuai/{id}',[PetaController::class,'deleteFilePetaSesuai'])->name('deleteFilePetaSesuai');
+    Route::post('addPetaSesuai', [PetaController::class, 'addPetaSesuai'])->name('addPetaSesuai');
+    Route::get('geteditPetaSesuai/{id}', [PetaController::class, 'geteditPetaSesuai'])->name('geteditPetaSesuai');
+    Route::post('editPetaSesuai', [PetaController::class, 'editPetaSesuai'])->name('editPetaSesuai');
+    Route::get('deletePetaSesuai/{id}', [PetaController::class, 'deletePetaSesuai'])->name('deletePetaSesuai');
+    Route::get('deleteFilePetaSesuai/{id}', [PetaController::class, 'deleteFilePetaSesuai'])->name('deleteFilePetaSesuai');
     //end peta sesuai
 
     //peta belum
@@ -67,12 +68,25 @@ Route::middleware('auth')->group(function () {
     Route::get('getPetaBelum', [PetaController::class, 'getPetaBelum'])->name('getPetaBelum');
     Route::post('uploadPetaBelum', [PetaController::class, 'uploadPetaBelum'])->name('uploadPetaBelum');
     Route::get('downloadDataBelum/{id}', [PetaController::class, 'downloadDataBelum'])->name('downloadDataBelum');
-    Route::post('addPetaBelum',[PetaController::class,'addPetaBelum'])->name('addPetaBelum');
-    Route::post('editPetaBelum',[PetaController::class,'editPetaBelum'])->name('editPetaBelum');
-    Route::get('geteditPetaBelum/{id}',[PetaController::class,'geteditPetaBelum'])->name('geteditPetaBelum');
-    Route::get('deletePetaBelum/{id}',[PetaController::class,'deletePetaBelum'])->name('deletePetaBelum');
-    Route::get('deleteFilePetaBelum/{id}',[PetaController::class,'deleteFilePetaBelum'])->name('deleteFilePetaBelum');
+    Route::post('addPetaBelum', [PetaController::class, 'addPetaBelum'])->name('addPetaBelum');
+    Route::post('editPetaBelum', [PetaController::class, 'editPetaBelum'])->name('editPetaBelum');
+    Route::get('geteditPetaBelum/{id}', [PetaController::class, 'geteditPetaBelum'])->name('geteditPetaBelum');
+    Route::get('deletePetaBelum/{id}', [PetaController::class, 'deletePetaBelum'])->name('deletePetaBelum');
+    Route::get('deleteFilePetaBelum/{id}', [PetaController::class, 'deleteFilePetaBelum'])->name('deleteFilePetaBelum');
     //end peta belum
+
+    //catatan
+    Route::get('catatan', [CatatanController::class, 'index'])->name('catatan');
+    Route::get('getDataCatatan', [CatatanController::class, 'getDataCatatan'])->name('getDataCatatan');
+    Route::post('addCatatan', [CatatanController::class, 'addCatatan'])->name('addCatatan');
+    Route::get('downloadDataCatatan/{catatan_id}', [CatatanController::class, 'downloadDataCatatan'])->name('downloadDataCatatan');
+    Route::get('downloadFileCatatan/{file_name}', [CatatanController::class, 'downloadFileCatatan'])->name('downloadFileCatatan');
+    Route::get('deleteCatatan/{catatan_id}', [CatatanController::class, 'deleteCatatan'])->name('deleteCatatan');
+    Route::get('deleteFileCatatan/{id}', [CatatanController::class, 'deleteFileCatatan'])->name('deleteFileCatatan');
+    Route::post('uploadCatatan', [CatatanController::class, 'uploadCatatan'])->name('uploadCatatan');
+    Route::get('geteditCatatan/{catatan_id}', [CatatanController::class, 'geteditCatatan'])->name('geteditCatatan');
+    Route::post('editCatatan', [CatatanController::class, 'editCatatan'])->name('editCatatan');
+    //endcatatan
 
     Route::middleware('hakakses:1')->group(function () {
         //kecamatan Kelurahan
@@ -127,5 +141,3 @@ Route::middleware('guest')->group(function () {
     Route::get('login', [AuthController::class, 'login_page'])->name('loginPage');
     Route::post('login', [AuthController::class, 'login'])->name('login');
 });
-
-

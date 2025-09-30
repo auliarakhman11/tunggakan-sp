@@ -93,8 +93,9 @@
                                 <h4 class="float-left"><b>Catatan</b></h4>
                             </div>
                             <div class="card-body">
-                                <h5><b>Jumlah Catatan ({{ $jml_data_scan }})</b></h5>
-                                <a href="{{ route('peta') }}" class="btn btn-primary"><i class="fas fa-box"></i> Lihat</a>
+                                <h5><b>Jumlah Catatan ({{ $jml_catatan }})</b></h5>
+                                <a href="{{ route('catatan') }}" class="btn btn-primary"><i class="fas fa-box"></i>
+                                    Lihat</a>
                             </div>
                         </div>
                     </div>

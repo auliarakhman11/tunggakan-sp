@@ -10,6 +10,15 @@ class Catatan extends Model
     use HasFactory;
 
     protected $table = 'catatan';
-    protected $fillable = ['isi_catatan'];
+    protected $fillable = ['tgl', 'isi_catatan', 'user_id', 'void'];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function uploadCatatanScan()
+    {
+        return $this->hasMany(UploadCatatan::class, 'catatan_id', 'id');
+    }
 }

@@ -54,23 +54,19 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="float-left">List Cataran</h4>
+                                <h4 class="float-left">List CataTan</h4>
                                 <button class="btn btn-primary btn-sm float-right" data-toggle="modal"
-                                    data-target="#modal_tambah_peta"><i class="fas fa-plus"></i> Tambah
+                                    data-target="#modal_tambah_catatan"><i class="fas fa-plus"></i> Tambah
                                     Data</button>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-hover" id="table_peta" width="100%">
+                                    <table class="table table-sm table-hover" id="table_catatan" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Nama Peta</th>
-                                                <th>Nomor Peta</th>
-                                                <th>Jenis Kegiatan</th>
-                                                <th>Kecamatan</th>
-                                                <th>Desa/Kelurahan</th>
-                                                <th>Tahun Pembuatan</th>
+                                                <th>Tanggal</th>
+                                                <th>Catatan</th>
                                                 <th>Upload/Download</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -89,10 +85,10 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <form id="form_tambah_peta">
-        <div class="modal fade" id="modal_tambah_peta" role="dialog" aria-labelledby="exampleModalLabel"
+    <form id="form_tambah_catatan">
+        <div class="modal fade" id="modal_tambah_catatan" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
                         <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
@@ -103,52 +99,21 @@
                     <div class="modal-body">
                         <div class="row">
 
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="form-group">
-                                    <label for="">Nama Peta</label>
-                                    <input type="text" class="form-control" name="nm_peta" required>
+                                    <label for="">Tanggal</label>
+                                    <input type="date" class="form-control" name="tgl" value="{{ date('Y-m-d') }}"
+                                        required>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="form-group">
-                                    <label for="">Nomor Peta</label>
-                                    <input type="text" class="form-control" name="no_peta">
-                                </div>
-                            </div>
-
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="">Kecamatan</label>
-                                    <input type="text" class="form-control" name="kecamatan">
+                                    <label for="">Isi Catatan</label>
+                                    <textarea name="isi_catatan" cols="30" rows="10" class="form-control" required></textarea>
                                 </div>
                             </div>
 
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="">Kelurahan</label>
-                                    <input type="text" class="form-control" name="kelurahan">
-                                </div>
-                            </div>
 
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="">Jenis Kegiatan</label>
-                                    <input type="text" class="form-control" name="jenis_kegiatan">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="">Tahun Pembuatan</label>
-                                    <input type="text" class="form-control" name="tahun_pembuatan">
-                                </div>
-                            </div>
-
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="">Jenis Kertas</label>
-                                    <input type="text" class="form-control" name="jenis_kertas">
-                                </div>
-                            </div>
 
                             <div class="col-12">
                                 <table class="table table-xs">
@@ -179,7 +144,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="btn_tambah_peta">Input</button>
+                        <button type="submit" class="btn btn-primary" id="btn_tambah_catatan">Input</button>
                     </div>
                 </div>
             </div>
@@ -195,19 +160,19 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" id="table_download_peta">
+                <div class="modal-body" id="table_download_catatan">
 
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="peta_id">
+                    <input type="hidden" id="catatan_id">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <form id="form_edit_peta">
-        <div class="modal fade" id="modal_edit_peta" role="dialog" aria-labelledby="exampleModalLabel"
+    <form id="form_edit_catatan">
+        <div class="modal fade" id="modal_edit_catatan" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -217,19 +182,19 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" id="table_edit_peta">
+                    <div class="modal-body" id="table_edit_catatan">
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="btn_edit_peta">Edit</button>
+                        <button type="submit" class="btn btn-primary" id="btn_edit_catatan">Edit</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
 
-    <form id="form_upload_peta">
+    <form id="form_upload_catatan">
         <div class="modal fade" id="modal_uplaod" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -241,7 +206,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="id" id="inputan_id_peta">
+                        <input type="hidden" name="id" id="inputan_id_catatan">
                         <table class="table table-xs">
                             <thead>
                                 <tr>
@@ -267,7 +232,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="btn_upload_peta">Upload</button>
+                        <button type="submit" class="btn btn-primary" id="btn_upload_catatan">Upload</button>
                     </div>
                 </div>
             </div>
@@ -291,28 +256,54 @@
         $(document).ready(function() {
 
 
-            $(document).on('change', '#kecamatan_id', function() {
-                var kecamatan_id = $(this).val();
-
-                if (kecamatan_id) {
-                    $.get('find-kelurahan/' + kecamatan_id, function(data) {
-                        $('#kelurahan_id').html(data);
-                    });
-                } else {
-                    $('#kelurahan_id').html('<option value="">Pilih Kelurahan/Desa..</option>');
-                }
-
-
+            $('#table_catatan').DataTable({
+                processing: true,
+                serverSide: true, //aktifkan server-side 
+                ajax: {
+                    url: "{{ route('getDataCatatan') }}",
+                    type: 'GET'
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'tgl',
+                        name: 'catatan.tgl'
+                    },
+                    {
+                        data: 'isi_catatan',
+                        name: 'catatan.isi_catatan'
+                    },
+                    {
+                        data: 'btn_upload',
+                        name: 'btn_upload'
+                    },
+                    {
+                        data: 'aksi',
+                        name: 'aksi'
+                    }
+                ],
+                order: [],
+                columnDefs: [{
+                        "targets": 0,
+                        "orderable": false
+                    },
+                    {
+                        "searchable": false,
+                        "targets": 0
+                    }
+                ],
             });
 
 
-            $(document).on('submit', '#form_tambah_peta', function(event) {
+            $(document).on('submit', '#form_tambah_catatan', function(event) {
                 event.preventDefault();
-                $('#btn_tambah_peta').attr('disabled', true);
-                $('#btn_tambah_peta').html(
+                $('#btn_tambah_catatan').attr('disabled', true);
+                $('#btn_tambah_catatan').html(
                     'Loading <div class="ld"><div></div><div></div><div></div></div>');
                 $.ajax({
-                    url: "{{ route('addPeta') }}",
+                    url: "{{ route('addCatatan') }}",
                     method: 'POST',
                     data: new FormData(this),
                     contentType: false,
@@ -320,20 +311,15 @@
                     success: function(data) {
 
                         if (data) {
-                            $("#btn_tambah_peta").removeAttr("disabled");
-                            $('#btn_tambah_peta').html(
+                            $("#btn_tambah_catatan").removeAttr("disabled");
+                            $('#btn_tambah_catatan').html(
                                 'Input'); //tombol simpan
 
-                            $('#modal_tambah_peta').modal('hide'); //modal hide
+                            $('#modal_tambah_catatan').modal('hide'); //modal hide
 
-                            $('#form_tambah_peta').trigger("reset");
-                            $('.select2bs4').val('');
-                            $('.select2bs4').select2({
-                                theme: 'bootstrap4',
-                                tags: true,
-                            }).trigger('change');
+                            $('#form_tambah_catatan').trigger("reset");
 
-                            var oTable = $('#table_peta').dataTable(); //inialisasi datatable
+                            var oTable = $('#table_catatan').dataTable(); //inialisasi datatable
                             oTable.fnDraw(false); //reset datatable
 
                             Swal.fire({
@@ -353,13 +339,13 @@
                                 icon: 'error',
                                 title: 'Ada masalah'
                             });
-                            $('#btn_tambah_peta').html('Input');
-                            $("#btn_tambah_peta").removeAttr("disabled");
+                            $('#btn_tambah_catatan').html('Input');
+                            $("#btn_tambah_catatan").removeAttr("disabled");
                         }
 
                     },
                     error: function(data) { //jika error tampilkan error pada console
-                        // console.log('Error:', data);
+                        console.log('Error:', data);
 
                         // var dt_error = '<div class="alert alert-danger">';
                         // jQuery.each(data.responseJSON.errors, function(key, message) {
@@ -370,23 +356,23 @@
                         // dt_error += '</div>';
                         // $('#message_error').html(dt_error);
                         // $('#message_error').show();
-                        $('#btn_tambah_peta').html('Input');
-                        $("#btn_tambah_peta").removeAttr("disabled");
+                        $('#btn_tambah_catatan').html('Input');
+                        $("#btn_tambah_catatan").removeAttr("disabled");
                     }
                 });
 
             });
 
             $(document).on('click', '.btn_download', function() {
-                var peta_id = $(this).attr('peta_id');
-                $('#peta_id').val(peta_id);
+                var catatan_id = $(this).attr('catatan_id');
+                $('#catatan_id').val(catatan_id);
 
-                $('#table_download_peta').html(
+                $('#table_download_catatan').html(
                     'Loading <div class="ld"><div></div><div></div><div></div></div>');
 
-                $.get('downloadDataPeta/' + peta_id, function(data) {
+                $.get('downloadDataCatatan/' + catatan_id, function(data) {
                     if (data) {
-                        $('#table_download_peta').html(data);
+                        $('#table_download_catatan').html(data);
                     } else {
                         Swal.fire({
                             toast: true,
@@ -397,21 +383,21 @@
                             title: 'Ada masalah'
                         });
 
-                        $('#table_download_peta').html('');
+                        $('#table_download_catatan').html('');
                     }
 
                 });
             });
 
-            $(document).on('click', '.btn_edit_peta', function() {
-                var peta_id = $(this).attr('peta_id');
+            $(document).on('click', '.btn_edit_catatan', function() {
+                var catatan_id = $(this).attr('catatan_id');
 
-                $('#table_edit_peta').html(
+                $('#table_edit_catatan').html(
                     'Loading <div class="ld"><div></div><div></div><div></div></div>');
 
-                $.get('geteditPeta/' + peta_id, function(data) {
+                $.get('geteditCatatan/' + catatan_id, function(data) {
                     if (data) {
-                        $('#table_edit_peta').html(data);
+                        $('#table_edit_catatan').html(data);
                     } else {
                         Swal.fire({
                             toast: true,
@@ -422,20 +408,20 @@
                             title: 'Ada masalah'
                         });
 
-                        $('#table_edit_peta').html('');
+                        $('#table_edit_catatan').html('');
                     }
 
                 });
             });
 
 
-            $(document).on('submit', '#form_edit_peta', function(event) {
+            $(document).on('submit', '#form_edit_catatan', function(event) {
                 event.preventDefault();
-                $('#btn_edit_peta').attr('disabled', true);
-                $('#btn_edit_peta').html(
+                $('#btn_edit_catatan').attr('disabled', true);
+                $('#btn_edit_catatan').html(
                     'Loading <div class="ld"><div></div><div></div><div></div></div>');
                 $.ajax({
-                    url: "{{ route('editPeta') }}",
+                    url: "{{ route('editCatatan') }}",
                     method: 'POST',
                     data: new FormData(this),
                     contentType: false,
@@ -443,13 +429,13 @@
                     success: function(data) {
 
                         if (data) {
-                            $("#btn_edit_peta").removeAttr("disabled");
-                            $('#btn_edit_peta').html(
+                            $("#btn_edit_catatan").removeAttr("disabled");
+                            $('#btn_edit_catatan').html(
                                 'edit'); //tombol simpan
 
-                            $('#modal_edit_peta').modal('hide'); //modal hide
+                            $('#modal_edit_catatan').modal('hide'); //modal hide
 
-                            var oTable = $('#table_peta').dataTable(); //inialisasi datatable
+                            var oTable = $('#table_catatan').dataTable(); //inialisasi datatable
                             oTable.fnDraw(false); //reset datatable
 
                             Swal.fire({
@@ -470,26 +456,26 @@
                                 icon: 'error',
                                 title: 'Ada masalah'
                             });
-                            $('#btn_edit_peta').html('edit');
-                            $("#btn_edit_peta").removeAttr("disabled");
+                            $('#btn_edit_catatan').html('edit');
+                            $("#btn_edit_catatan").removeAttr("disabled");
                         }
 
                     },
                     error: function(data) { //jika error tampilkan error pada console
 
-                        $('#btn_edit_peta').html('edit');
-                        $("#btn_edit_peta").removeAttr("disabled");
+                        $('#btn_edit_catatan').html('edit');
+                        $("#btn_edit_catatan").removeAttr("disabled");
                     }
                 });
 
             });
 
-            $(document).on('click', '.btn_delete_peta', function() {
+            $(document).on('click', '.btn_delete_catatan', function() {
 
                 if (confirm('Apakah anda yakin ingin menghapus data peta?')) {
-                    var peta_id = $(this).attr('peta_id');
-                    $.get('deletePeta/' + peta_id, function(data) {
-                        var oTable = $('#table_peta').dataTable(); //inialisasi datatable
+                    var catatan_id = $(this).attr('catatan_id');
+                    $.get('deleteCatatan/' + catatan_id, function(data) {
+                        var oTable = $('#table_catatan').dataTable(); //inialisasi datatable
                         oTable.fnDraw(false); //reset datatable
 
                         Swal.fire({
@@ -507,18 +493,18 @@
 
             $(document).on('click', '.btn_upload', function() {
 
-                var peta_id = $(this).attr('peta_id');
-                $("#inputan_id_peta").val(peta_id);
+                var catatan_id = $(this).attr('catatan_id');
+                $("#inputan_id_catatan").val(catatan_id);
 
             });
 
-            $(document).on('submit', '#form_upload_peta', function(event) {
+            $(document).on('submit', '#form_upload_catatan', function(event) {
                 event.preventDefault();
-                $('#btn_upload_peta').attr('disabled', true);
-                $('#btn_upload_peta').html(
+                $('#btn_upload_catatan').attr('disabled', true);
+                $('#btn_upload_catatan').html(
                     'Loading <div class="ld"><div></div><div></div><div></div></div>');
                 $.ajax({
-                    url: "{{ route('uploadPeta') }}",
+                    url: "{{ route('uploadCatatan') }}",
                     method: 'POST',
                     data: new FormData(this),
                     contentType: false,
@@ -526,8 +512,8 @@
                     success: function(data) {
 
                         if (data) {
-                            $("#btn_upload_peta").removeAttr("disabled");
-                            $('#btn_upload_peta').html(
+                            $("#btn_upload_catatan").removeAttr("disabled");
+                            $('#btn_upload_catatan').html(
                                 'Upload'); //tombol simpan
 
                             $('#modal_uplaod').modal('hide'); //modal hide
@@ -551,32 +537,32 @@
                                 icon: 'error',
                                 title: 'Ada masalah'
                             });
-                            $('#btn_upload_peta').html('Upload');
-                            $("#btn_upload_peta").removeAttr("disabled");
+                            $('#btn_upload_catatan').html('Upload');
+                            $("#btn_upload_catatan").removeAttr("disabled");
                         }
 
                     },
                     error: function(data) { //jika error tampilkan error pada console
 
-                        $('#btn_upload_peta').html('Upload');
-                        $("#btn_upload_peta").removeAttr("disabled");
+                        $('#btn_upload_catatan').html('Upload');
+                        $("#btn_upload_catatan").removeAttr("disabled");
                     }
                 });
 
             });
 
 
-            $(document).on('click', '.btn_delete_file_peta', function() {
+            $(document).on('click', '.btn_delete_file_catatan', function() {
 
-                if (confirm('Apakah anda yakin ingin menghapus data peta?')) {
+                if (confirm('Apakah anda yakin ingin menghapus data catatan?')) {
                     var id = $(this).attr('upload_id');
-                    $.get('deleteFilePeta/' + id, function(data) {
+                    $.get('deleteFileCatatan/' + id, function(data) {
 
                         if (data) {
-                            var peta_id = $('#peta_id').val();
-                            $.get('downloadDataPeta/' + peta_id, function(data) {
+                            var catatan_id = $('#catatan_id').val();
+                            $.get('downloadDataCatatan/' + catatan_id, function(data) {
                                 if (data) {
-                                    $('#table_download_peta').html(data);
+                                    $('#table_download_catatan').html(data);
                                 } else {
                                     Swal.fire({
                                         toast: true,
@@ -587,7 +573,7 @@
                                         title: 'Ada masalah'
                                     });
 
-                                    $('#table_download_peta').html('');
+                                    $('#table_download_catatan').html('');
                                 }
 
                             });
