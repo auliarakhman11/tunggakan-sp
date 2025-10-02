@@ -11,4 +11,9 @@ class Petugas extends Model
 
     protected $table = 'petugas';
     protected $fillable = ['nm_petugas'];
+
+    public function petugas()
+    {
+        return $this->belongsTo(Petugas::class, 'petugas_id', 'id');
+    }
 }

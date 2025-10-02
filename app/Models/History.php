@@ -10,7 +10,7 @@ class History extends Model
     use HasFactory;
 
     protected $table = 'history';
-    protected $fillable = ['berkas_id', 'proses_id', 'petugas_id', 'tgl', 'user_id'];
+    protected $fillable = ['berkas_id', 'proses_id', 'tgl', 'user_id'];
 
     public function berkas()
     {
