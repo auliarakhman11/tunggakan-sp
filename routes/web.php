@@ -34,6 +34,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [BerkasController::class, 'index'])->name('berkas');
     Route::get('getBerkas', [BerkasController::class, 'getBerkas'])->name('getBerkas');
     Route::post('addBerkas', [BerkasController::class, 'addBerkas'])->name('addBerkas');
+    Route::post('editBerkas', [BerkasController::class, 'editBerkas'])->name('editBerkas');
+    Route::get('geteditBerkas/{berkas_id}', [BerkasController::class, 'geteditBerkas'])->name('geteditBerkas');
+    Route::get('deleteBerkas/{berkas_id}', [BerkasController::class, 'deleteBerkas'])->name('deleteBerkas');
+    Route::post('lanjutBerkas', [BerkasController::class, 'lanjutBerkas'])->name('lanjutBerkas');
     //endhome
 
 

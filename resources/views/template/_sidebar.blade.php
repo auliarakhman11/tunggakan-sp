@@ -4,7 +4,7 @@
       <a href="/" class="brand-link">
           <img src="{{ asset('img') }}/Logo_BPN-KemenATR.png" alt="AdminLTE Logo" class="brand-image elevation-3"
               style="opacity: .8">
-          <span class="brand-text font-weight-light">SIMANTAN</span>
+          <span class="brand-text font-weight-light">TUNGGAKAN</span>
       </a>
 
       <!-- Sidebar -->
@@ -60,18 +60,18 @@
 
                   <li class="nav-item {{ Request::is(['/']) ? 'menu-open' : '' }}">
                       <a href="#" class="nav-link {{ Request::is(['/']) ? 'active' : '' }}">
-                          <i class="nav-icon fas fa-chart-line"></i>
+                          <i class="nav-icon fas fa-folder-open"></i>
                           <p>
-                              Dashboard
+                              Berkas
                               <i class="right fas fa-angle-left"></i>
                           </p>
                       </a>
                       <ul class="nav nav-treeview">
 
                           <li class="nav-item">
-                              <a href="{{ route('home') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
+                              <a href="{{ route('berkas') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
                                   <i class="fas fa-minus nav-icon"></i>
-                                  <p>Kembali ke Dashboard</p>
+                                  <p>List Berkas</p>
                               </a>
                           </li>
 

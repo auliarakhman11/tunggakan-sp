@@ -71,6 +71,7 @@
                                                 <th>Tahun</th>
                                                 <th>Kelurahan</th>
                                                 <th>Aksi</th>
+                                                <th>Manipulasi</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -101,45 +102,30 @@
                     <div class="modal-body">
                         <div class="row">
 
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="form-group">
-                                    <label for="">Tanggal</label>
+                                    <label for="">Tanggal Masuk</label>
                                     <input type="date" class="form-control" name="tgl" value="{{ date('Y-m-d') }}"
                                         required>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="form-group">
-                                    <label for="">Isi Catatan</label>
-                                    <textarea name="isi_catatan" cols="30" rows="10" class="form-control" required></textarea>
+                                    <label for="">Kelurahan</label>
+                                    <input type="text" class="form-control" id="kelurahan" name="kelurahan" required>
                                 </div>
                             </div>
-
-
-
-                            <div class="col-12">
-                                <table class="table table-xs">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">Nama</th>
-                                            <th class="text-center">Upload</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" class="form-control" name="nm_uplaod1"></td>
-                                            <td><input type="file" name="file_name1" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="text" class="form-control" name="nm_uplaod2"></td>
-                                            <td><input type="file" name="file_name2" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="text" class="form-control" name="nm_uplaod3"></td>
-                                            <td><input type="file" name="file_name3" class="form-control"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Nomor Berkas</label>
+                                    <input type="text" class="form-control" id="no_berkas" name="no_berkas" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Tahun</label>
+                                    <input type="text" class="form-control" id="tahun" name="tahun" required>
+                                </div>
                             </div>
 
                         </div>
@@ -153,88 +139,63 @@
         </div>
     </form>
 
-    <div class="modal fade" id="modal_download" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h5 class="modal-title" id="exampleModalLabel">Download</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="table_download_catatan">
-
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" id="catatan_id">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <form id="form_edit_catatan">
-        <div class="modal fade" id="modal_edit_catatan" role="dialog" aria-labelledby="exampleModalLabel"
+    <form id="form_edit_berkas">
+        <div class="modal fade" id="modal_edit_berkas" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Peta</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Berkas</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" id="table_edit_catatan">
+                    <div class="modal-body" id="table_edit_berkas">
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="btn_edit_catatan">Edit</button>
+                        <button type="submit" class="btn btn-primary" id="btn_edit_berkas">Edit</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
 
-    <form id="form_upload_catatan">
-        <div class="modal fade" id="modal_uplaod" role="dialog" aria-labelledby="exampleModalLabel"
+
+    <form id="form_lanjut_berkas">
+        <div class="modal fade" id="modal_lanjut_berkas" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h5 class="modal-title" id="exampleModalLabel">Upload Peta</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Lanjut Berkas</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="id" id="inputan_id_catatan">
-                        <table class="table table-xs">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Nama</th>
-                                    <th class="text-center">Upload</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" class="form-control" name="nm_uplaod1"></td>
-                                    <td><input type="file" name="file_name1" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" name="nm_uplaod2"></td>
-                                    <td><input type="file" name="file_name2" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" name="nm_uplaod3"></td>
-                                    <td><input type="file" name="file_name3" class="form-control"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="col-12">
+                                        <label for="">Tanggal</label>
+                                        <input class="form-control" type="date" value="{{ date('Y-m-d') }}"
+                                            name="tgl" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="table_lanjut_berkas"></div>
+                        <div id="list_petugas"></div>
+                        <div id="button_table_tambah_pegawai"></div>
+
                     </div>
                     <div class="modal-footer">
+                        <input type="hidden" name="berkas_id" id="berkas_id_lanjut">
+                        <input type="hidden" name="proses_id" id="proses_id_lanjut">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="btn_upload_catatan">Upload</button>
+                        <button type="submit" class="btn btn-primary" id="btn_lanjut_berkas">Lanjut</button>
                     </div>
                 </div>
             </div>
@@ -271,7 +232,7 @@
                     },
                     {
                         data: 'tgl',
-                        name: 'catatan.tgl'
+                        name: 'berkas.tgl'
                     },
                     {
                         data: 'proses.nm_proses',
@@ -292,6 +253,10 @@
                     {
                         data: 'aksi',
                         name: 'aksi'
+                    },
+                    {
+                        data: 'manipulasi',
+                        name: 'manipulasi'
                     }
                 ],
                 order: [],
@@ -311,7 +276,8 @@
                 event.preventDefault();
                 $('#btn_tambah_berkas').attr('disabled', true);
                 $('#btn_tambah_berkas').html(
-                    'Loading <div class="ld"><div></div><div></div><div></div></div>');
+                    '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>'
+                );
                 $.ajax({
                     url: "{{ route('addBerkas') }}",
                     method: 'POST',
@@ -327,7 +293,10 @@
 
                             $('#modal_tambah_berkas').modal('hide'); //modal hide
 
-                            $('#form_tambah_berkas').trigger("reset");
+                            // $('#form_tambah_berkas').trigger("reset");
+                            $('#kelurahan').val('');
+                            $('#no_berkas').val('');
+                            $('#tahun').val('');
 
                             var oTable = $('#table_berkas').dataTable(); //inialisasi datatable
                             oTable.fnDraw(false); //reset datatable
@@ -338,7 +307,7 @@
                                 showConfirmButton: false,
                                 timer: 3000,
                                 icon: 'success',
-                                title: 'Data scan berhasil diinput'
+                                title: 'Data berhasil diinput'
                             });
                         } else {
                             Swal.fire({
@@ -373,15 +342,16 @@
 
             });
 
-            $(document).on('click', '.btn_edit_catatan', function() {
-                var catatan_id = $(this).attr('catatan_id');
+            $(document).on('click', '.btn_edit_berkas', function() {
+                var berkas_id = $(this).attr('berkas_id');
 
-                $('#table_edit_catatan').html(
-                    'Loading <div class="ld"><div></div><div></div><div></div></div>');
+                $('#table_edit_berkas').html(
+                    '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>'
+                );
 
-                $.get('geteditCatatan/' + catatan_id, function(data) {
+                $.get('geteditBerkas/' + berkas_id, function(data) {
                     if (data) {
-                        $('#table_edit_catatan').html(data);
+                        $('#table_edit_berkas').html(data);
                     } else {
                         Swal.fire({
                             toast: true,
@@ -392,20 +362,21 @@
                             title: 'Ada masalah'
                         });
 
-                        $('#table_edit_catatan').html('');
+                        $('#table_edit_berkas').html('');
                     }
 
                 });
             });
 
 
-            $(document).on('submit', '#form_edit_catatan', function(event) {
+            $(document).on('submit', '#form_edit_berkas', function(event) {
                 event.preventDefault();
-                $('#btn_edit_catatan').attr('disabled', true);
-                $('#btn_edit_catatan').html(
-                    'Loading <div class="ld"><div></div><div></div><div></div></div>');
+                $('#btn_edit_berkas').attr('disabled', true);
+                $('#btn_edit_berkas').html(
+                    '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>'
+                );
                 $.ajax({
-                    url: "{{ route('editCatatan') }}",
+                    url: "{{ route('editBerkas') }}",
                     method: 'POST',
                     data: new FormData(this),
                     contentType: false,
@@ -413,11 +384,11 @@
                     success: function(data) {
 
                         if (data) {
-                            $("#btn_edit_catatan").removeAttr("disabled");
-                            $('#btn_edit_catatan').html(
+                            $("#btn_edit_berkas").removeAttr("disabled");
+                            $('#btn_edit_berkas').html(
                                 'edit'); //tombol simpan
 
-                            $('#modal_edit_catatan').modal('hide'); //modal hide
+                            $('#modal_edit_berkas').modal('hide'); //modal hide
 
                             var oTable = $('#table_berkas').dataTable(); //inialisasi datatable
                             oTable.fnDraw(false); //reset datatable
@@ -440,25 +411,25 @@
                                 icon: 'error',
                                 title: 'Ada masalah'
                             });
-                            $('#btn_edit_catatan').html('edit');
-                            $("#btn_edit_catatan").removeAttr("disabled");
+                            $('#btn_edit_berkas').html('edit');
+                            $("#btn_edit_berkas").removeAttr("disabled");
                         }
 
                     },
                     error: function(data) { //jika error tampilkan error pada console
 
-                        $('#btn_edit_catatan').html('edit');
-                        $("#btn_edit_catatan").removeAttr("disabled");
+                        $('#btn_edit_berkas').html('edit');
+                        $("#btn_edit_berkas").removeAttr("disabled");
                     }
                 });
 
             });
 
-            $(document).on('click', '.btn_delete_catatan', function() {
+            $(document).on('click', '.btn_delete_berkas', function() {
 
                 if (confirm('Apakah anda yakin ingin menghapus data peta?')) {
-                    var catatan_id = $(this).attr('catatan_id');
-                    $.get('deleteCatatan/' + catatan_id, function(data) {
+                    var berkas_id = $(this).attr('berkas_id');
+                    $.get('deleteBerkas/' + berkas_id, function(data) {
                         var oTable = $('#table_berkas').dataTable(); //inialisasi datatable
                         oTable.fnDraw(false); //reset datatable
 
@@ -475,20 +446,64 @@
 
             });
 
-            $(document).on('click', '.btn_upload', function() {
 
-                var catatan_id = $(this).attr('catatan_id');
-                $("#inputan_id_catatan").val(catatan_id);
+            $(document).on('click', '.btn_lanjut_berkas', function() {
+                var berkas_id = $(this).attr('berkas_id');
+                var proses_id = $(this).attr('proses_id');
+
+                $('#berkas_id_lanjut').val(berkas_id);
+                $('#proses_id_lanjut').val(proses_id);
+
+                if (proses_id == 4 || proses_id == 6) {
+                    $('#table_lanjut_berkas').html(
+                        '<div class="row"><div class="col-10"><div class="form-group"><label for="">Petugas</label><select name="petugas_id[]" class="form-control" required><option value="">Pilih Pegawai</option>@foreach ($petugas as $p)<option value="{{ $p->id }}">{{ $p->nm_petugas }}</option>@endforeach</select></div></div><div class="col-2"></div></div>'
+                    );
+                    $('#list_petugas').html('');
+                    $('#button_table_tambah_pegawai').html(
+                        '<button class="btn btn-sm btn-success float-right" type="button" id="button_tambah_pegawai">+</button>'
+                    );
+                } else {
+                    $('#table_lanjut_berkas').html('<h4>Apakah anda yakin ingin melanjutkan berkas?</h4>');
+                    $('#list_petugas').html('');
+                    $('#button_table_tambah_pegawai').html('');
+                }
+
 
             });
 
-            $(document).on('submit', '#form_upload_catatan', function(event) {
+
+            var count_petugas_berkas = 1;
+            $(document).on('click', '#button_tambah_pegawai', function() {
+                count_petugas_berkas = count_petugas_berkas + 1;
+                var html_code = '<div class="row mt-2" id="row' + count_petugas_berkas + '">';
+
+                html_code +=
+                    '<div class="col-10"><div class="form-group"><select name="petugas_id[]" class="form-control" required><option value="">Pilih Pegawai</option>@foreach ($petugas as $p)<option value="{{ $p->id }}">{{ $p->nm_petugas }}</option>@endforeach</select></div></div>';
+
+                html_code += '<div class="col-2"><button type="button" data-row="row' +
+                    count_petugas_berkas +
+                    '" class="btn btn-danger btn-sm remove_petugas_berkas"><i class="fas fa-minus"></></button></div>';
+
+                html_code += "</div>";
+
+                $('#list_petugas').append(html_code);
+            });
+
+
+            $(document).on('click', '.remove_petugas_berkas', function() {
+                var delete_row = $(this).data("row");
+                $('#' + delete_row).remove();
+            });
+
+
+            $(document).on('submit', '#form_lanjut_berkas', function(event) {
                 event.preventDefault();
-                $('#btn_upload_catatan').attr('disabled', true);
-                $('#btn_upload_catatan').html(
-                    'Loading <div class="ld"><div></div><div></div><div></div></div>');
+                $('#btn_lanjut_berkas').attr('disabled', true);
+                $('#btn_lanjut_berkas').html(
+                    '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>'
+                );
                 $.ajax({
-                    url: "{{ route('uploadCatatan') }}",
+                    url: "{{ route('lanjutBerkas') }}",
                     method: 'POST',
                     data: new FormData(this),
                     contentType: false,
@@ -496,12 +511,14 @@
                     success: function(data) {
 
                         if (data) {
-                            $("#btn_upload_catatan").removeAttr("disabled");
-                            $('#btn_upload_catatan').html(
-                                'Upload'); //tombol simpan
+                            $("#btn_lanjut_berkas").removeAttr("disabled");
+                            $('#btn_lanjut_berkas').html(
+                                'Lanjut'); //tombol simpan
 
-                            $('#modal_uplaod').modal('hide'); //modal hide
+                            $('#modal_lanjut_berkas').modal('hide'); //modal hide
 
+                            var oTable = $('#table_berkas').dataTable(); //inialisasi datatable
+                            oTable.fnDraw(false); //reset datatable
 
                             Swal.fire({
                                 toast: true,
@@ -509,7 +526,7 @@
                                 showConfirmButton: false,
                                 timer: 3000,
                                 icon: 'success',
-                                title: 'Data scan berhasil diupload'
+                                title: 'Data scan berhasil diinput'
                             });
 
                         } else {
@@ -521,63 +538,17 @@
                                 icon: 'error',
                                 title: 'Ada masalah'
                             });
-                            $('#btn_upload_catatan').html('Upload');
-                            $("#btn_upload_catatan").removeAttr("disabled");
+                            $('#btn_lanjut_berkas').html('Lanjut');
+                            $("#btn_lanjut_berkas").removeAttr("disabled");
                         }
 
                     },
                     error: function(data) { //jika error tampilkan error pada console
-
-                        $('#btn_upload_catatan').html('Upload');
-                        $("#btn_upload_catatan").removeAttr("disabled");
+                        console.log('Error:', data);
+                        $('#btn_lanjut_berkas').html('Lanjut');
+                        $("#btn_lanjut_berkas").removeAttr("disabled");
                     }
                 });
-
-            });
-
-
-            $(document).on('click', '.btn_delete_file_catatan', function() {
-
-                if (confirm('Apakah anda yakin ingin menghapus data catatan?')) {
-                    var id = $(this).attr('upload_id');
-                    $.get('deleteFileCatatan/' + id, function(data) {
-
-                        if (data) {
-                            var catatan_id = $('#catatan_id').val();
-                            $.get('downloadDataCatatan/' + catatan_id, function(data) {
-                                if (data) {
-                                    $('#table_download_catatan').html(data);
-                                } else {
-                                    Swal.fire({
-                                        toast: true,
-                                        position: 'top-end',
-                                        showConfirmButton: false,
-                                        timer: 3000,
-                                        icon: 'error',
-                                        title: 'Ada masalah'
-                                    });
-
-                                    $('#table_download_catatan').html('');
-                                }
-
-                            });
-
-                            Swal.fire({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                icon: 'success',
-                                title: 'Data berhasil dihapus'
-                            });
-
-                        } else {
-
-                        }
-
-
-                    });
-                }
 
             });
 

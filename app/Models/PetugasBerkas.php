@@ -10,5 +10,5 @@ class PetugasBerkas extends Model
     use HasFactory;
 
     protected $table = 'petugas_berkas';
-    protected $fillable = ['berkas_id', 'petugas_id'];
+    protected $fillable = ['berkas_id', 'history_id', 'proses_id', 'petugas_id', 'user_id', 'void'];
 }

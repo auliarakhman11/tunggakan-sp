@@ -10,5 +10,5 @@ class Proses extends Model
     use HasFactory;
 
     protected $table = 'proses';
-    protected $fillable = ['nm_proses'];
+    protected $fillable = ['nm_proses', 'pilih_petugas'];
 }
