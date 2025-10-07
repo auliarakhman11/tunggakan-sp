@@ -23,11 +23,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
 
-
-
-
-
-
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     //home
@@ -38,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::get('geteditBerkas/{berkas_id}', [BerkasController::class, 'geteditBerkas'])->name('geteditBerkas');
     Route::get('deleteBerkas/{berkas_id}', [BerkasController::class, 'deleteBerkas'])->name('deleteBerkas');
     Route::post('lanjutBerkas', [BerkasController::class, 'lanjutBerkas'])->name('lanjutBerkas');
+    Route::get('getDataCatatan/{berkas_id}', [BerkasController::class, 'getDataCatatan'])->name('getDataCatatan');
+    Route::post('addCatatan', [BerkasController::class, 'addCatatan'])->name('addCatatan');
+    Route::get('hapusCatatan/{catatan_id}', [BerkasController::class, 'hapusCatatan'])->name('hapusCatatan');
     //endhome
 
 

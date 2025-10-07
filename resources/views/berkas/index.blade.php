@@ -202,6 +202,27 @@
         </div>
     </form>
 
+    <div class="modal fade" id="modal_catatan_berkas" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Catatan Berkas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="table_catatan_berkas">
+
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="berkas_id_catatan">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 
@@ -549,6 +570,138 @@
                         $("#btn_lanjut_berkas").removeAttr("disabled");
                     }
                 });
+
+            });
+
+            function getDataCatatan(berkas_id) {
+                $.get('getDataCatatan/' + berkas_id, function(data) {
+                    if (data) {
+                        $('#table_catatan_berkas').html(data);
+                    } else {
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            icon: 'error',
+                            title: 'Ada masalah'
+                        });
+
+                        $('#table_catatan_berkas').html('');
+                    }
+
+                });
+            }
+
+
+            $(document).on('click', '.btn_catatan_berkas', function() {
+                var berkas_id = $(this).attr('berkas_id');
+
+                $('#berkas_id_catatan').val(berkas_id);
+
+                $('#table_catatan_berkas').html(
+                    '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>'
+                );
+
+                getDataCatatan(berkas_id);
+
+            });
+
+
+            $(document).on('submit', '#form_tambah_catatan', function(event) {
+                event.preventDefault();
+                $('#btn_tambah_catatan').attr('disabled', true);
+                $('#btn_tambah_catatan').html(
+                    '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>'
+                );
+                $.ajax({
+                    url: "{{ route('addCatatan') }}",
+                    method: 'POST',
+                    data: new FormData(this),
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+
+                        // if (data) {
+
+
+                        // } else {
+                        //     Swal.fire({
+                        //         toast: true,
+                        //         position: 'top-end',
+                        //         showConfirmButton: false,
+                        //         timer: 3000,
+                        //         icon: 'error',
+                        //         title: 'Ada masalah'
+                        //     });
+                        //     $('#btn_tambah_catatan').html(
+                        //         '<i class="fas fa-plus-circle"></i> Tambah');
+                        //     $("#btn_tambah_catatan").removeAttr("disabled");
+
+                        //     console.log('Error:', data);
+
+                        // }
+
+                        var berkas_id_catatan = $('#berkas_id_catatan').val();
+                        getDataCatatan(berkas_id_catatan);
+                        $("#btn_tambah_catatan").removeAttr("disabled");
+                        $('#btn_tambah_catatan').html(
+                            '<i class="fas fa-plus-circle"></i> Tambah'); //tombol simpan
+
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            icon: 'success',
+                            title: 'Data berhasil dibuat'
+                        });
+
+                    },
+                    error: function(data) { //jika error tampilkan error pada console
+                        console.log('Error:', data);
+                        $('#btn_tambah_catatan').html(
+                            '<i class="fas fa-plus-circle"></i> Tambah');
+                        $("#btn_tambah_catatan").removeAttr("disabled");
+                    }
+                });
+
+            });
+
+            $(document).on('click', '.delete_catatan', function() {
+
+                if (confirm('Apakah anda yakin ingin menghapus data peta?')) {
+                    var catatan_id = $(this).attr('catatan_id');
+
+                    $.get('hapusCatatan/' + catatan_id, function(data) {
+                        if (data) {
+                            var berkas_id_catatan = $('#berkas_id_catatan').val();
+                            Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                icon: 'success',
+                                title: 'Data berhasil dihapus'
+                            });
+                            getDataCatatan(berkas_id_catatan);
+                        } else {
+                            Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                icon: 'error',
+                                title: 'Ada masalah'
+                            });
+
+                            $('#table_catatan_berkas').html('');
+                        }
+
+                    });
+                }
+
+
 
             });
 

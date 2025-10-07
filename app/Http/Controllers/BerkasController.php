@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berkas;
+use App\Models\Catatan;
 use App\Models\History;
 use App\Models\Petugas;
 use App\Models\PetugasBerkas;
@@ -131,6 +132,30 @@ class BerkasController extends Controller
 
 
 
+        return true;
+    }
+
+
+    public function getDataCatatan($berkas_id)
+    {
+        return view('berkas.getDataCatatan', [
+            'catatan' => Catatan::where('berkas_id', $berkas_id)->get(),
+            'berkas_id' => $berkas_id
+        ])->render();
+    }
+
+    public function addCatatan(Request $request)
+    {
+        Catatan::create([
+            'isi_catatan' => $request->isi_catatan,
+            'berkas_id' => $request->berkas_id,
+            'user_id' => Auth::id(),
+        ]);
+    }
+
+    public function hapusCatatan($catatan_id)
+    {
+        Catatan::where('id', $catatan_id)->delete();
         return true;
     }
 }
