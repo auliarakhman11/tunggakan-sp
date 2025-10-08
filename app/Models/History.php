@@ -16,4 +16,14 @@ class History extends Model
     {
         return $this->belongsTo(Berkas::class, 'berkas_id', 'id');
     }
+
+    public function proses()
+    {
+        return $this->belongsTo(Proses::class,'proses_id','id');
+    }
+
+    public function petugasBerkas()
+    {
+        return $this->hasMany(PetugasBerkas::class, 'history_id', 'id');
+    }
 }

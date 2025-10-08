@@ -7,6 +7,7 @@ use App\Models\Catatan;
 use App\Models\History;
 use App\Models\Petugas;
 use App\Models\PetugasBerkas;
+use App\Models\Proses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,10 +27,10 @@ class BerkasController extends Controller
 
         return datatables()->of($berkas)
             ->addColumn('aksi', function ($data) {
-                return '<a href="javascript:void(0)" data-target="#modal_catatan_berkas" class="btn btn-sm btn-secondary btn_catatan_berkas" data-toggle="modal" berkas_id="' . $data->id . '"><i class="fas fa-notes-medical"></i></a> <a href="javascript:void(0)" data-target="#modal_kembali_berkas" class="btn btn-sm btn-warning text-light btn_kembali_berkas" data-toggle="modal" berkas_id="' . $data->id . '"><i class="fas fa-arrow-circle-left"></i></a> <a href="javascript:void(0)" data-target="#modal_lanjut_berkas" class="btn btn-sm btn-success btn_lanjut_berkas" data-toggle="modal" berkas_id="' . $data->id . '" proses_id="' . $data->proses_id . '" pilih_petugas="' . $data->proses->pilih_petugas . '"><i class="fas fa-arrow-circle-right"></i></a>';
+                return '<a href="javascript:void(0)" data-target="#modal_catatan_berkas" class="btn btn-xs mt-2 btn-secondary btn_catatan_berkas" data-toggle="modal" berkas_id="' . $data->id . '"><i class="fas fa-notes-medical"></i> Catatan</a> <a href="javascript:void(0)" data-target="#modal_history_berkas" class="btn btn-xs mt-2 btn-info btn_history_berkas" data-toggle="modal" berkas_id="' . $data->id . '"><i class="fas fa-history"></i> History</a> <a href="javascript:void(0)" data-target="#modal_kembali_berkas" class="btn btn-xs mt-2 btn-warning text-light btn_kembali_berkas" data-toggle="modal" berkas_id="' . $data->id . '" proses_id="' . $data->proses_id . '"><i class="fas fa-arrow-circle-left"></i> Kembali</a> <a href="javascript:void(0)" data-target="#modal_lanjut_berkas" class="btn btn-xs mt-2 btn-success btn_lanjut_berkas" data-toggle="modal" berkas_id="' . $data->id . '" proses_id="' . $data->proses_id . '" pilih_petugas="' . $data->proses->pilih_petugas . '"><i class="fas fa-arrow-circle-right"></i> Lanjut</a>';
             })
             ->addColumn('manipulasi', function ($data) {
-                return '<a href="javascript:void(0)" data-target="#modal_edit_berkas" class="btn btn-sm btn-primary btn_edit_berkas" data-toggle="modal" berkas_id="' . $data->id . '"><i class="fas fa-edit"></i></a> <a href="javascript:void(0)" class="btn btn-sm btn-danger btn_delete_berkas" berkas_id="' . $data->id . '"><i class="fas fa-trash"></i></a>';
+                return '<a href="javascript:void(0)" data-target="#modal_edit_berkas" class="btn btn-xs mt-2 btn-primary btn_edit_berkas" data-toggle="modal" berkas_id="' . $data->id . '"><i class="fas fa-edit"></i></a> <a href="javascript:void(0)" class="btn btn-xs mt-2 btn-danger btn_delete_berkas" berkas_id="' . $data->id . '"><i class="fas fa-trash"></i></a>';
             })
 
             ->rawColumns(['aksi', 'manipulasi'])
@@ -123,7 +124,7 @@ class BerkasController extends Controller
                     'berkas_id' => $request->berkas_id,
                     'history_id' => $history->id,
                     'proses_id' => $request->proses_id + 1,
-                    'eptugas_id' => $petugas_id[$count],
+                    'petugas_id' => $petugas_id[$count],
                     'user_id' => Auth::id(),
                     'void' => 0
                 ]);
@@ -158,4 +159,39 @@ class BerkasController extends Controller
         Catatan::where('id', $catatan_id)->delete();
         return true;
     }
+
+    public function getKembaliBerkas($berkas_id,$proses_id)
+    {
+        return view('berkas.getKembaliBerkas', [
+            'berkas_id' => $berkas_id,
+            'proses_id' => $proses_id,
+            'proses' => Proses::whereNotIn('id',[1,13])->get(),
+        ])->render();
+    }
+
+    public function kembaliBerkas($berkas_id, $proses_id){
+        Berkas::where('id', $berkas_id)->update([
+            'proses_id' => $proses_id,
+            'user_id' => Auth::id(),
+        ]);
+
+        History::create([
+            'berkas_id' => $berkas_id,
+            'proses_id' => $proses_id,
+            'tgl' => date('Y-m-d'),
+            'user_id' => Auth::id(),
+            'kembali' => 1
+        ]);
+
+        return true;
+
+    }
+
+    public function historyBerkas($berkas_id){
+        return view('berkas.historyBerkas', [
+            'berkas_id' => $berkas_id,
+            'history' => History::select('history.*')->where('berkas_id',$berkas_id)->with(['petugasBerkas','petugasBerkas.petugas','proses'])->get(),
+        ])->render();
+    }
+
 }

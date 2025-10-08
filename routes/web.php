@@ -36,6 +36,9 @@ Route::middleware('auth')->group(function () {
     Route::get('getDataCatatan/{berkas_id}', [BerkasController::class, 'getDataCatatan'])->name('getDataCatatan');
     Route::post('addCatatan', [BerkasController::class, 'addCatatan'])->name('addCatatan');
     Route::get('hapusCatatan/{catatan_id}', [BerkasController::class, 'hapusCatatan'])->name('hapusCatatan');
+    Route::get('getKembaliBerkas/{berkas_id}/{proses_id}', [BerkasController::class,'getKembaliBerkas'])->name('getKembaliBerkas');
+    Route::get('kembaliBerkas/{berkas_id}/{proses_id}', [BerkasController::class,'kembaliBerkas'])->name('kembaliBerkas');
+    Route::get('historyBerkas/{berkas_id}', [BerkasController::class,'historyBerkas'])->name('historyBerkas');
     //endhome
 
 

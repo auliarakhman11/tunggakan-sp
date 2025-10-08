@@ -61,7 +61,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-hover" id="table_berkas" width="100%">
+                                    <table class="table table-sm table-hover" id="table_berkas" width="100%" style="font-size: 13px;">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -217,6 +217,46 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" id="berkas_id_catatan">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_kembali_berkas" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Berkas Kembali</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="table_kembali_berkas">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_history_berkas" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Berkas Kembali</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="table_history_berkas">
+
+                </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -467,24 +507,27 @@
 
             });
 
+            var dt_proses = ['dt_proses','Korsub (Penunjukan ST)', 'Pelaksana', 'Kasi', 'Petugas Ukur', 'Pelaksana', 'Pemetaan', 'Pelaksana', 'Korsub', 'Pelaksana', 'Kasi', 'Pelaksana', 'Selesai'];
 
             $(document).on('click', '.btn_lanjut_berkas', function() {
                 var berkas_id = $(this).attr('berkas_id');
                 var proses_id = $(this).attr('proses_id');
+                var proses_selanjutnya = dt_proses[proses_id];
+                
 
                 $('#berkas_id_lanjut').val(berkas_id);
                 $('#proses_id_lanjut').val(proses_id);
 
                 if (proses_id == 4 || proses_id == 6) {
                     $('#table_lanjut_berkas').html(
-                        '<div class="row"><div class="col-10"><div class="form-group"><label for="">Petugas</label><select name="petugas_id[]" class="form-control" required><option value="">Pilih Pegawai</option>@foreach ($petugas as $p)<option value="{{ $p->id }}">{{ $p->nm_petugas }}</option>@endforeach</select></div></div><div class="col-2"></div></div>'
+                        '<h4>Apakah anda yakin ingin melanjutkan berkas ke '+proses_selanjutnya+'?</h4> <div class="row"><div class="col-10"><div class="form-group"><label for="">Petugas</label><select name="petugas_id[]" class="form-control" required><option value="">Pilih Pegawai</option>@foreach ($petugas as $p)<option value="{{ $p->id }}">{{ $p->nm_petugas }}</option>@endforeach</select></div></div><div class="col-2"></div></div>'
                     );
                     $('#list_petugas').html('');
                     $('#button_table_tambah_pegawai').html(
                         '<button class="btn btn-sm btn-success float-right" type="button" id="button_tambah_pegawai">+</button>'
                     );
                 } else {
-                    $('#table_lanjut_berkas').html('<h4>Apakah anda yakin ingin melanjutkan berkas?</h4>');
+                    $('#table_lanjut_berkas').html('<h4>Apakah anda yakin ingin melanjutkan berkas ke '+proses_selanjutnya+'?</h4>');
                     $('#list_petugas').html('');
                     $('#button_table_tambah_pegawai').html('');
                 }
@@ -547,7 +590,7 @@
                                 showConfirmButton: false,
                                 timer: 3000,
                                 icon: 'success',
-                                title: 'Data scan berhasil diinput'
+                                title: 'Berhasil melanjutkan berkas'
                             });
 
                         } else {
@@ -703,6 +746,100 @@
 
 
 
+            });
+
+
+            $(document).on('click', '.btn_kembali_berkas', function() {
+                var berkas_id = $(this).attr('berkas_id');
+                var proses_id = $(this).attr('proses_id');
+
+                $('#table_kembali_berkas').html(
+                    '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>'
+                );
+
+                $.get('getKembaliBerkas/' + berkas_id + '/' + proses_id, function(data) {
+                    if (data) {
+                        $('#table_kembali_berkas').html(data);
+                    } else {
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            icon: 'error',
+                            title: 'Ada masalah'
+                        });
+
+                        $('#table_kembali_berkas').html('');
+                    }
+
+                });
+            });
+
+            $(document).on('click', '.btn-kembali-berkas', function() {
+                var berkas_id = $(this).attr('berkas_id');
+                var proses_id = $(this).attr('proses_id');
+
+                $('.btn-kembali-berkas').html(
+                    '<div class="spinner-border text-secondary" role="status"><span class="sr-only">Loading...</span></div>'
+                );
+
+                $.get('kembaliBerkas/' + berkas_id + '/' + proses_id, function(data) {
+                    if (data) {
+                        $('#modal_kembali_berkas').modal('hide'); //modal hide
+
+                        var oTable = $('#table_berkas').dataTable(); //inialisasi datatable
+                        oTable.fnDraw(false); //reset datatable
+
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            icon: 'success',
+                            title: 'Berhasil mengembalikan berkas'
+                        });
+                    } else {
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            icon: 'error',
+                            title: 'Ada masalah'
+                        });
+
+                        $('.btn-kembali-berkas').html('');
+                    }
+
+                });
+            });
+
+
+            $(document).on('click', '.btn_history_berkas', function() {
+                var berkas_id = $(this).attr('berkas_id');
+
+                $('#table_history_berkas').html(
+                    '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>'
+                );
+
+                $.get('historyBerkas/' + berkas_id, function(data) {
+                    if (data) {
+                        $('#table_history_berkas').html(data);
+                    } else {
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            icon: 'error',
+                            title: 'Ada masalah'
+                        });
+
+                        $('#table_history_berkas').html('');
+                    }
+
+                });
             });
 
 
