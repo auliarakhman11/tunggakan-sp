@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerkasController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\UserController;
 
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     //home
-    Route::get('/', [BerkasController::class, 'index'])->name('berkas');
+    Route::get('berkas', [BerkasController::class, 'index'])->name('berkas');
     Route::get('getBerkas', [BerkasController::class, 'getBerkas'])->name('getBerkas');
     Route::post('addBerkas', [BerkasController::class, 'addBerkas'])->name('addBerkas');
     Route::post('editBerkas', [BerkasController::class, 'editBerkas'])->name('editBerkas');
@@ -39,7 +40,13 @@ Route::middleware('auth')->group(function () {
     Route::get('getKembaliBerkas/{berkas_id}/{proses_id}', [BerkasController::class,'getKembaliBerkas'])->name('getKembaliBerkas');
     Route::get('kembaliBerkas/{berkas_id}/{proses_id}', [BerkasController::class,'kembaliBerkas'])->name('kembaliBerkas');
     Route::get('historyBerkas/{berkas_id}', [BerkasController::class,'historyBerkas'])->name('historyBerkas');
+    Route::get('berkasSelesai',[BerkasController::class,'berkasSelesai'])->name('berkasSelesai');
+    Route::get('getBerkasSelesai',[BerkasController::class,'getBerkasSelesai'])->name('getBerkasSelesai');
     //endhome
+
+    //laporan
+    Route::get('/',[LaporanController::class,'index'])->name('laporan');
+    //endLaporan
 
 
 

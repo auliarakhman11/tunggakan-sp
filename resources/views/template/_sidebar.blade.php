@@ -57,9 +57,28 @@
             </ul>
           </li> --}}
 
+                  <li class="nav-item {{ Request::is(['laporan']) ? 'menu-open' : '' }}">
+                      <a href="#" class="nav-link {{ Request::is(['laporan']) ? 'active' : '' }}">
+                          <i class="nav-icon fas fa-chart-line"></i>
+                          <p>
+                              Dashboard
+                              <i class="right fas fa-angle-left"></i>
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
 
-                  <li class="nav-item {{ Request::is(['/']) ? 'menu-open' : '' }}">
-                      <a href="#" class="nav-link {{ Request::is(['/']) ? 'active' : '' }}">
+                          <li class="nav-item">
+                              <a href="{{ route('laporan') }}" class="nav-link {{ Request::is('laporan') ? 'active' : '' }}">
+                                  <i class="fas fa-minus nav-icon"></i>
+                                  <p>Dashboard</p>
+                              </a>
+                          </li>
+
+                      </ul>
+                  </li>
+
+                  <li class="nav-item {{ Request::is(['/','berkasSelesai']) ? 'menu-open' : '' }}">
+                      <a href="#" class="nav-link {{ Request::is(['/','berkasSelesai']) ? 'active' : '' }}">
                           <i class="nav-icon fas fa-folder-open"></i>
                           <p>
                               Berkas
@@ -72,6 +91,12 @@
                               <a href="{{ route('berkas') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
                                   <i class="fas fa-minus nav-icon"></i>
                                   <p>List Berkas</p>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="{{ route('berkasSelesai') }}" class="nav-link {{ Request::is('berkasSelesai') ? 'active' : '' }}">
+                                  <i class="fas fa-minus nav-icon"></i>
+                                  <p>List Berkas Selesai</p>
                               </a>
                           </li>
 

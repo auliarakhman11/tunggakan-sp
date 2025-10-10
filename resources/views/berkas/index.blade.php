@@ -54,7 +54,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="float-left">List CataTan</h4>
+                                <h4 class="float-left">List Berkas</h4>
                                 <button class="btn btn-primary btn-sm float-right" data-toggle="modal"
                                     data-target="#modal_tambah_berkas"><i class="fas fa-plus"></i> Tambah
                                     Data</button>
@@ -292,9 +292,9 @@
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'tgl',
-                        name: 'berkas.tgl'
-                    },
+                        data: 'tanggal',
+                        name: 'dt_tanggal.tanggal'
+                    }, 
                     {
                         data: 'proses.nm_proses',
                         name: 'proses.nm_proses'

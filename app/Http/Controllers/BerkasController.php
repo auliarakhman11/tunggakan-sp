@@ -10,6 +10,7 @@ use App\Models\PetugasBerkas;
 use App\Models\Proses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BerkasController extends Controller
 {
@@ -23,7 +24,12 @@ class BerkasController extends Controller
 
     public function getBerkas()
     {
-        $berkas = Berkas::query()->where('void', 0)->where('proses_id', '!=', 13)->orderBy('id', 'DESC')->with(['user', 'proses']);
+        $berkas = Berkas::query()->select('berkas.*')->selectRaw('dt_tanggal.tanggal')
+        ->leftJoin(
+                DB::raw("(SELECT berkas.id, DATE_FORMAT(berkas.tgl, '%d/%m/%Y') AS tanggal FROM berkas GROUP BY berkas.id) dt_tanggal"), 
+                'berkas.id', '=', 'dt_tanggal.id'
+            )
+        ->where('void', 0)->where('proses_id', '!=', 13)->orderBy('id', 'DESC')->with(['user', 'proses']);
 
         return datatables()->of($berkas)
             ->addColumn('aksi', function ($data) {
@@ -192,6 +198,31 @@ class BerkasController extends Controller
             'berkas_id' => $berkas_id,
             'history' => History::select('history.*')->where('berkas_id',$berkas_id)->with(['petugasBerkas','petugasBerkas.petugas','proses'])->get(),
         ])->render();
+    }
+
+    public function berkasSelesai()
+    {
+        return view('berkas.berkasSelesai', [
+            'title' => 'List Berkas Selesai',
+        ]);
+    }
+
+    public function getBerkasSelesai()
+    {
+        $berkas = Berkas::query()->select('berkas.*')->selectRaw('dt_tanggal.tanggal')
+        ->leftJoin(
+                DB::raw("(SELECT berkas.id, DATE_FORMAT(berkas.tgl, '%d/%m/%Y') AS tanggal FROM berkas GROUP BY berkas.id) dt_tanggal"), 
+                'berkas.id', '=', 'dt_tanggal.id'
+            )
+        ->where('void', 0)->where('proses_id', 13)->orderBy('id', 'DESC')->with(['user', 'proses']);
+
+        return datatables()->of($berkas)
+            ->addColumn('aksi', function ($data) {
+                return '<a href="javascript:void(0)" data-target="#modal_history_berkas" class="btn btn-xs mt-2 btn-info btn_history_berkas" data-toggle="modal" berkas_id="' . $data->id . '"><i class="fas fa-history"></i> History</a>';
+            })
+            ->rawColumns(['aksi'])
+            ->addIndexColumn()
+            ->make(true);
     }
 
 }
