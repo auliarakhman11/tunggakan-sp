@@ -55,13 +55,12 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="float-left">List Berkas</h4>
-                                <button class="btn btn-primary btn-sm float-right" data-toggle="modal"
-                                    data-target="#modal_tambah_berkas"><i class="fas fa-plus"></i> Tambah
-                                    Data</button>
+
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-hover" id="table_berkas" width="100%" style="font-size: 13px;">
+                                    <table class="table table-sm table-hover" id="table_berkas" width="100%"
+                                        style="font-size: 13px;">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -88,8 +87,7 @@
     <!-- /.content-wrapper -->
 
 
-    <div class="modal fade" id="modal_history_berkas" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="modal_history_berkas" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
@@ -139,7 +137,7 @@
                     {
                         data: 'tanggal',
                         name: 'dt_tanggal.tanggal'
-                    }, 
+                    },
                     {
                         data: 'proses.nm_proses',
                         name: 'proses.nm_proses'

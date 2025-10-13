@@ -57,8 +57,8 @@
             </ul>
           </li> --}}
 
-                  <li class="nav-item {{ Request::is(['laporan']) ? 'menu-open' : '' }}">
-                      <a href="#" class="nav-link {{ Request::is(['laporan']) ? 'active' : '' }}">
+                  <li class="nav-item {{ Request::is(['/']) ? 'menu-open' : '' }}">
+                      <a href="#" class="nav-link {{ Request::is(['/']) ? 'active' : '' }}">
                           <i class="nav-icon fas fa-chart-line"></i>
                           <p>
                               Dashboard
@@ -68,7 +68,7 @@
                       <ul class="nav nav-treeview">
 
                           <li class="nav-item">
-                              <a href="{{ route('laporan') }}" class="nav-link {{ Request::is('laporan') ? 'active' : '' }}">
+                              <a href="{{ route('laporan') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
                                   <i class="fas fa-minus nav-icon"></i>
                                   <p>Dashboard</p>
                               </a>
@@ -77,8 +77,8 @@
                       </ul>
                   </li>
 
-                  <li class="nav-item {{ Request::is(['/','berkasSelesai']) ? 'menu-open' : '' }}">
-                      <a href="#" class="nav-link {{ Request::is(['/','berkasSelesai']) ? 'active' : '' }}">
+                  <li class="nav-item {{ Request::is(['berkas', 'berkasSelesai']) ? 'menu-open' : '' }}">
+                      <a href="#" class="nav-link {{ Request::is(['berkas', 'berkasSelesai']) ? 'active' : '' }}">
                           <i class="nav-icon fas fa-folder-open"></i>
                           <p>
                               Berkas
@@ -88,13 +88,15 @@
                       <ul class="nav nav-treeview">
 
                           <li class="nav-item">
-                              <a href="{{ route('berkas') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
+                              <a href="{{ route('berkas') }}"
+                                  class="nav-link {{ Request::is('berkas') ? 'active' : '' }}">
                                   <i class="fas fa-minus nav-icon"></i>
                                   <p>List Berkas</p>
                               </a>
                           </li>
                           <li class="nav-item">
-                              <a href="{{ route('berkasSelesai') }}" class="nav-link {{ Request::is('berkasSelesai') ? 'active' : '' }}">
+                              <a href="{{ route('berkasSelesai') }}"
+                                  class="nav-link {{ Request::is('berkasSelesai') ? 'active' : '' }}">
                                   <i class="fas fa-minus nav-icon"></i>
                                   <p>List Berkas Selesai</p>
                               </a>
@@ -102,6 +104,38 @@
 
                       </ul>
                   </li>
+
+                  @if (Auth::user()->role_id == 1)
+                      <li class="nav-item {{ Request::is(['user', 'petugas']) ? 'menu-open' : '' }}">
+                          <a href="#" class="nav-link {{ Request::is(['user', 'petugas']) ? 'active' : '' }}">
+                              <i class="nav-icon fas fa-server"></i>
+                              <p>
+                                  Database
+                                  <i class="right fas fa-angle-left"></i>
+                              </p>
+                          </a>
+                          <ul class="nav nav-treeview">
+
+                              <li class="nav-item">
+                                  <a href="{{ route('user') }}"
+                                      class="nav-link {{ Request::is('user') ? 'active' : '' }}">
+                                      <i class="fas fa-minus nav-icon"></i>
+                                      <p>Users</p>
+                                  </a>
+                              </li>
+
+                              <li class="nav-item">
+                                  <a href="{{ route('petugas') }}"
+                                      class="nav-link {{ Request::is('petugas') ? 'active' : '' }}">
+                                      <i class="fas fa-minus nav-icon"></i>
+                                      <p>Petugas</p>
+                                  </a>
+                              </li>
+
+                          </ul>
+                      </li>
+                  @endif
+
 
                   {{-- @if (Auth::user()->role_id == 1)
                       <li class="nav-item {{ Request::is(['kecamatan-kelurahan', 'user']) ? 'menu-open' : '' }}">
