@@ -4,7 +4,7 @@
       <a href="/" class="brand-link">
           <img src="{{ asset('img') }}/Logo_BPN-KemenATR.png" alt="AdminLTE Logo" class="brand-image elevation-3"
               style="opacity: .8">
-          <span class="brand-text font-weight-light">TUNGGAKAN</span>
+          <span class="brand-text font-weight-light">SIMONTA</span>
       </a>
 
       <!-- Sidebar -->

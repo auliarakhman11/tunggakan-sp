@@ -61,7 +61,7 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="float-start">Grafik Performa Alih Media</h5>
+                                <h5 class="float-start">Grafik Performa Penyelesaian Tunggakan</h5>
 
                             </div>
 
@@ -79,7 +79,7 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="float-start">Tabel Performa Alih Media</h5>
+                                <h5 class="float-start">Tabel Performa Penyelesaian Tunggakan</h5>
 
                             </div>
 
@@ -119,7 +119,7 @@
                     <div class="col-8">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="float-start">Persentase Pengelesaian Alih Media</h5>
+                                <h5 class="float-start">Persentase Pengelesaian Tunggakan</h5>
 
                             </div>
 

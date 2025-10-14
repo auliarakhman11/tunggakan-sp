@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Tunggakan</title>
+    <title>SIMONTA | Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -35,7 +35,7 @@
                 <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
                     @csrf
                     <span class="login100-form-title">
-                        Tunggakan
+                        SIMONTA <p>(Sistem Monitoring Tunggakan)</p>
                     </span>
 
 
