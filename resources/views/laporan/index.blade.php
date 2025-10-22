@@ -132,6 +132,48 @@
                         </div>
                     </div>
 
+                    <div class="col-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="float-start">Laporan Petugas Ukur</h5>
+
+                            </div>
+
+                            <div class="card-body ">
+
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama</th>
+                                            <th>TAB</th>
+                                            <th>Selesai</th>
+                                            <th>Tutup</th>
+                                            <th>Sisa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $i = 1;
+                                        @endphp
+                                        @foreach ($laporanPU as $d)
+                                            <tr>
+                                                <td>{{ $i++ }}</td>
+                                                <td>{{ $d['nm_petugas'] }}</td>
+                                                <td>{{ $d['ttl_berkas'] }}</td>
+                                                <td>{{ $d['ttl_selesai'] }}</td>
+                                                <td>{{ $d['ttl_tutup'] }}</td>
+                                                <td></td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+
                     <!-- Total Revenue -->
 
                     <!--/ Total Revenue -->

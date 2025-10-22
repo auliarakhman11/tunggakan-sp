@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Berkas;
 use App\Models\History;
+use App\Models\PetugasBerkas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
 {
@@ -81,8 +83,49 @@ class LaporanController extends Controller
         $berkas_selesai = Berkas::where('proses_id', 13)->where('void', 0)->count();
         $berkas_belum = Berkas::where('proses_id', '!=', 13)->where('void', 0)->count();
 
+        // $laporanPU = PetugasBerkas::select('petugas_berkas.*')->selectRaw("dt_berkas.ttl_berkas, dt_berkas.ttl_selesai, dt_berkas.ttl_tutup")
+        //     ->leftJoin(
+        //         DB::raw("(SELECT berkas_id, COUNT(id) as ttl_berkas, COUNT(IF(proses_id = 13, 1 ,0)) as ttl_selesai, COUNT(IF(proses_id = 14,1,0)) as ttl_tutup FROM history GROUP BY proses_id) dt_berkas"),
+        //         'petugas_berkas.berkas_id',
+        //         '=',
+        //         'dt_berkas.berkas_id'
+        //     )
+        //     ->where('void', 0)
+        //     ->where('proses_id', 5)
+        //     ->groupBy('petugas_berkas.petugas_id')
+        //     ->with(['petugas'])
+        //     ->get();
+
+        $dat_petugas = PetugasBerkas::select('petugas_id')->where('void', 0)->where('proses_id', 5)->groupBy('petugas_id')->with('petugas')->get();
+        $dat_petugas_berkas = PetugasBerkas::select('petugas_id', 'berkas_id')->where('void', 0)->where('proses_id', 5)->groupBy('petugas_id')->groupBy('berkas_id')->get();
+        $dat_history = History::where('void', 0)->get();
+
+        $laporanPU = [];
+        foreach ($dat_petugas as $dp) {
+            $ttl_berkas = 0;
+            $ttl_selesai = 0;
+            $ttl_tutup = 0;
+            $dt_petugas_berkas = $dat_petugas_berkas->where('petugas_id', $dp->petugas_id)->all();
+            foreach ($dt_petugas_berkas as $dpb) {
+                $dt_berkas = $dat_history->where('berkas_id', $dpb->berkas_id)->groupBy('berkas_id')->count();
+                $dt_selesai = $dat_history->where('berkas_id', $dpb->berkas_id)->where('proses_id', 13)->count();
+                $dt_tutup = $dat_history->where('berkas_id', $dpb->berkas_id)->where('proses_id', 14)->count();
+
+                $ttl_berkas += $dt_berkas;
+                $ttl_selesai += $dt_selesai;
+                $ttl_tutup += $dt_tutup;
+            }
+            $laporanPU[] = [
+                'nm_petugas' => $dp->petugas->nm_petugas,
+                'ttl_berkas' => $ttl_berkas,
+                'ttl_selesai' => $ttl_selesai,
+                'ttl_tutup' => $ttl_tutup,
+            ];
+        }
+
+
         return view('laporan.index', [
-            'title' => 'List Berkas',
+            'title' => 'Dashboard',
             'periode' => $dt_pr,
             'chart' => $dtc,
             'berkas_selesai' => $berkas_selesai ? $berkas_selesai : 0,
@@ -90,6 +133,7 @@ class LaporanController extends Controller
             'dat_berkas_masuk' => $dat_berkas_masuk,
             'dat_berkas_selesai' => $dat_berkas_selesai,
             'data_periode' => $data_periode2,
+            'laporanPU' => $laporanPU
         ]);
     }
 }

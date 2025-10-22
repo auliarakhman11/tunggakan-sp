@@ -25,11 +25,13 @@ class BerkasController extends Controller
     public function getBerkas()
     {
         $berkas = Berkas::query()->select('berkas.*')->selectRaw('dt_tanggal.tanggal')
-        ->leftJoin(
-                DB::raw("(SELECT berkas.id, DATE_FORMAT(berkas.tgl, '%d/%m/%Y') AS tanggal FROM berkas GROUP BY berkas.id) dt_tanggal"), 
-                'berkas.id', '=', 'dt_tanggal.id'
+            ->leftJoin(
+                DB::raw("(SELECT berkas.id, DATE_FORMAT(berkas.tgl, '%d/%m/%Y') AS tanggal FROM berkas GROUP BY berkas.id) dt_tanggal"),
+                'berkas.id',
+                '=',
+                'dt_tanggal.id'
             )
-        ->where('void', 0)->where('proses_id', '!=', 13)->orderBy('id', 'DESC')->with(['user', 'proses']);
+            ->where('void', 0)->whereNotIn('proses_id', [13, 14])->orderBy('id', 'DESC')->with(['user', 'proses']);
 
         return datatables()->of($berkas)
             ->addColumn('aksi', function ($data) {
@@ -166,16 +168,17 @@ class BerkasController extends Controller
         return true;
     }
 
-    public function getKembaliBerkas($berkas_id,$proses_id)
+    public function getKembaliBerkas($berkas_id, $proses_id)
     {
         return view('berkas.getKembaliBerkas', [
             'berkas_id' => $berkas_id,
             'proses_id' => $proses_id,
-            'proses' => Proses::whereNotIn('id',[1,13])->get(),
+            'proses' => Proses::whereNotIn('id', [1, 13])->get(),
         ])->render();
     }
 
-    public function kembaliBerkas($berkas_id, $proses_id){
+    public function kembaliBerkas($berkas_id, $proses_id)
+    {
         Berkas::where('id', $berkas_id)->update([
             'proses_id' => $proses_id,
             'user_id' => Auth::id(),
@@ -190,13 +193,13 @@ class BerkasController extends Controller
         ]);
 
         return true;
-
     }
 
-    public function historyBerkas($berkas_id){
+    public function historyBerkas($berkas_id)
+    {
         return view('berkas.historyBerkas', [
             'berkas_id' => $berkas_id,
-            'history' => History::select('history.*')->where('berkas_id',$berkas_id)->with(['petugasBerkas','petugasBerkas.petugas','proses'])->get(),
+            'history' => History::select('history.*')->where('berkas_id', $berkas_id)->with(['petugasBerkas', 'petugasBerkas.petugas', 'proses'])->get(),
         ])->render();
     }
 
@@ -210,11 +213,13 @@ class BerkasController extends Controller
     public function getBerkasSelesai()
     {
         $berkas = Berkas::query()->select('berkas.*')->selectRaw('dt_tanggal.tanggal')
-        ->leftJoin(
-                DB::raw("(SELECT berkas.id, DATE_FORMAT(berkas.tgl, '%d/%m/%Y') AS tanggal FROM berkas GROUP BY berkas.id) dt_tanggal"), 
-                'berkas.id', '=', 'dt_tanggal.id'
+            ->leftJoin(
+                DB::raw("(SELECT berkas.id, DATE_FORMAT(berkas.tgl, '%d/%m/%Y') AS tanggal FROM berkas GROUP BY berkas.id) dt_tanggal"),
+                'berkas.id',
+                '=',
+                'dt_tanggal.id'
             )
-        ->where('void', 0)->where('proses_id', 13)->orderBy('id', 'DESC')->with(['user', 'proses']);
+            ->where('void', 0)->where('proses_id', 13)->orderBy('id', 'DESC')->with(['user', 'proses']);
 
         return datatables()->of($berkas)
             ->addColumn('aksi', function ($data) {
@@ -224,5 +229,4 @@ class BerkasController extends Controller
             ->addIndexColumn()
             ->make(true);
     }
-
 }
