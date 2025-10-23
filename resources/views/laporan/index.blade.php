@@ -132,7 +132,7 @@
                         </div>
                     </div>
 
-                    <div class="col-8">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="float-start">Laporan Petugas Ukur</h5>
@@ -141,7 +141,8 @@
 
                             <div class="card-body ">
 
-                                <table class="table table-sm">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-bordered">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -163,11 +164,12 @@
                                                 <td>{{ $d['ttl_berkas'] }}</td>
                                                 <td>{{ $d['ttl_selesai'] }}</td>
                                                 <td>{{ $d['ttl_tutup'] }}</td>
-                                                <td></td>
+                                                <td>{{ $d['ttl_berkas'] - ($d['ttl_selesai'] + $d['ttl_tutup']) }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
 
                             </div>
 

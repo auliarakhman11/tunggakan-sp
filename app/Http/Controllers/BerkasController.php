@@ -123,6 +123,10 @@ class BerkasController extends Controller
             'user_id' => Auth::id(),
         ]);
 
+        if (($request->proses_id + 1) == 13) {
+            History::where('berkas_id',$request->berkas_id)->update(['selesai' => 1]);
+        }
+
         $petugas_id = $request->petugas_id;
 
         if ($petugas_id) {
