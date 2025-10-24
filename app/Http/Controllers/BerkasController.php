@@ -196,6 +196,10 @@ class BerkasController extends Controller
             'kembali' => 1
         ]);
 
+        if ($proses_id == 14) {
+            History::where('berkas_id',$berkas_id)->update(['selesai' => 1]);
+        }
+
         return true;
     }
 

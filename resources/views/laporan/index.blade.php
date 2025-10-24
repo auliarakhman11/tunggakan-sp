@@ -151,6 +151,10 @@
                                             <th>Selesai</th>
                                             <th>Tutup</th>
                                             <th>Sisa</th>
+                                            @foreach ($dat_bulan as $db)
+                                                <th>Petugas Ukur {{ $db->monthyear }}</th>
+                                            @endforeach
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -165,6 +169,9 @@
                                                 <td>{{ $d['ttl_selesai'] }}</td>
                                                 <td>{{ $d['ttl_tutup'] }}</td>
                                                 <td>{{ $d['ttl_berkas'] - ($d['ttl_selesai'] + $d['ttl_tutup']) }}</td>
+                                                @foreach ($d['data_perbulan'] as $db)
+                                                    <td>{{ $db }}</td>
+                                                @endforeach
                                             </tr>
                                         @endforeach
                                     </tbody>

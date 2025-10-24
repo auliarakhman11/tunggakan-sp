@@ -99,6 +99,9 @@ class LaporanController extends Controller
         $dat_petugas = PetugasBerkas::select('petugas_id')->where('void', 0)->where('proses_id', 5)->groupBy('petugas_id')->with('petugas')->get();
         $dat_petugas_berkas = PetugasBerkas::select('petugas_id', 'berkas_id')->where('void', 0)->where('proses_id', 5)->groupBy('petugas_id')->groupBy('berkas_id')->get();
         $dat_history = History::where('void', 0)->get();
+        $dat_bulan = History::selectRaw("DATE_FORMAT(tgl, '%m/%Y') monthyear, DATE_FORMAT(tgl, '%Y-%m-01') as tgl1, YEAR(tgl) year, MONTH(tgl) month")->groupby('year','month')->get();
+
+        
 
         $laporanPU = [];
         foreach ($dat_petugas as $dp) {
@@ -115,11 +118,26 @@ class LaporanController extends Controller
                 $ttl_selesai += $dt_selesai;
                 $ttl_tutup += $dt_tutup;
             }
+
+            $data_perbulan = [];
+            foreach ($dat_bulan as $db) {
+                $dat_belum = 0;
+                foreach ($dt_petugas_berkas as $dpb2) {
+                    $dt_belum = $dat_history->where('tgl','>=',$db->tgl1)->where('tgl','<=',date("Y-m-t", strtotime($db->tgl1)))->where('berkas_id', $dpb2->berkas_id)->where('selesai',0)->where('proses_id',5)->groupBy('berkas_id')->count();
+                    $dat_belum += $dt_belum;
+
+                }
+                
+                $data_perbulan [] = $dat_belum;
+            }
+
+
             $laporanPU[] = [
                 'nm_petugas' => $dp->petugas->nm_petugas,
                 'ttl_berkas' => $ttl_berkas,
                 'ttl_selesai' => $ttl_selesai,
                 'ttl_tutup' => $ttl_tutup,
+                'data_perbulan' => $data_perbulan,
             ];
         }
 
@@ -133,7 +151,8 @@ class LaporanController extends Controller
             'dat_berkas_masuk' => $dat_berkas_masuk,
             'dat_berkas_selesai' => $dat_berkas_selesai,
             'data_periode' => $data_periode2,
-            'laporanPU' => $laporanPU
+            'laporanPU' => $laporanPU,
+            'dat_bulan' => $dat_bulan,
         ]);
     }
 }
