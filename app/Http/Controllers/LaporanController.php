@@ -99,36 +99,52 @@ class LaporanController extends Controller
         $dat_petugas = PetugasBerkas::select('petugas_id')->where('void', 0)->where('proses_id', 5)->groupBy('petugas_id')->with('petugas')->get();
         $dat_petugas_berkas = PetugasBerkas::select('petugas_id', 'berkas_id')->where('void', 0)->where('proses_id', 5)->groupBy('petugas_id')->groupBy('berkas_id')->get();
         $dat_history = History::where('void', 0)->get();
-        $dat_bulan = History::selectRaw("DATE_FORMAT(tgl, '%m/%Y') monthyear, DATE_FORMAT(tgl, '%Y-%m-01') as tgl1, YEAR(tgl) year, MONTH(tgl) month")->groupby('year','month')->get();
+        $dat_bulan = History::selectRaw("DATE_FORMAT(tgl, '%m/%Y') monthyear, DATE_FORMAT(tgl, '%Y-%m-01') as tgl1, YEAR(tgl) year, MONTH(tgl) month")->groupby('year', 'month')->get();
 
-        
+        $dat_berkas = Berkas::where('void', 0)->get();
+
+
 
         $laporanPU = [];
         foreach ($dat_petugas as $dp) {
             $ttl_berkas = 0;
             $ttl_selesai = 0;
             $ttl_tutup = 0;
+
+            $ttl_pemetaan = 0;
+            $ttl_pelaksana = 0;
+            $ttl_korsub = 0;
+            $ttl_kasi = 0;
             $dt_petugas_berkas = $dat_petugas_berkas->where('petugas_id', $dp->petugas_id)->all();
             foreach ($dt_petugas_berkas as $dpb) {
                 $dt_berkas = $dat_history->where('berkas_id', $dpb->berkas_id)->groupBy('berkas_id')->count();
                 $dt_selesai = $dat_history->where('berkas_id', $dpb->berkas_id)->where('proses_id', 13)->count();
                 $dt_tutup = $dat_history->where('berkas_id', $dpb->berkas_id)->where('proses_id', 14)->count();
 
+                $dt_pemetaan = $dat_berkas->where('id', $dpb->berkas_id)->where('proses_id', 7)->count();
+                $dt_pelaksana = $dat_berkas->where('id', $dpb->berkas_id)->whereIn('proses_id', [6, 8, 10, 12])->count();
+                $dt_korsub = $dat_berkas->where('id', $dpb->berkas_id)->where('proses_id', 9)->count();
+                $dt_kasi = $dat_berkas->where('id', $dpb->berkas_id)->where('proses_id', 11)->count();
+
                 $ttl_berkas += $dt_berkas;
                 $ttl_selesai += $dt_selesai;
                 $ttl_tutup += $dt_tutup;
+                $ttl_pemetaan += $dt_pemetaan;
+                $ttl_pelaksana += $dt_pelaksana;
+                $ttl_korsub += $dt_korsub;
+                $ttl_kasi += $dt_kasi;
             }
 
             $data_perbulan = [];
+
             foreach ($dat_bulan as $db) {
                 $dat_belum = 0;
                 foreach ($dt_petugas_berkas as $dpb2) {
-                    $dt_belum = $dat_history->where('tgl','>=',$db->tgl1)->where('tgl','<=',date("Y-m-t", strtotime($db->tgl1)))->where('berkas_id', $dpb2->berkas_id)->where('selesai',0)->where('proses_id',5)->groupBy('berkas_id')->count();
+                    $dt_belum = $dat_history->where('tgl', '>=', $db->tgl1)->where('tgl', '<=', date("Y-m-t", strtotime($db->tgl1)))->where('berkas_id', $dpb2->berkas_id)->where('selesai', 0)->where('proses_id', 5)->groupBy('berkas_id')->count();
                     $dat_belum += $dt_belum;
-
                 }
-                
-                $data_perbulan [] = $dat_belum;
+
+                $data_perbulan[] = $dat_belum;
             }
 
 
@@ -138,7 +154,18 @@ class LaporanController extends Controller
                 'ttl_selesai' => $ttl_selesai,
                 'ttl_tutup' => $ttl_tutup,
                 'data_perbulan' => $data_perbulan,
+                'ttl_pemetaan' => $ttl_pemetaan,
+                'ttl_pelaksana' => $ttl_pelaksana,
+                'ttl_korsub' => $ttl_korsub,
+                'ttl_kasi' => $ttl_kasi,
+
             ];
+        }
+
+        $data_tot_bulan = [];
+        foreach ($dat_bulan as $db) {
+            $dt_ttl_belum = $dat_history->where('tgl', '>=', $db->tgl1)->where('tgl', '<=', date("Y-m-t", strtotime($db->tgl1)))->where('selesai', 0)->where('proses_id', 5)->count();
+            $data_tot_bulan[] = ['tgl' => $db->tgl1, 'tot' => $dt_ttl_belum];
         }
 
 
@@ -153,6 +180,7 @@ class LaporanController extends Controller
             'data_periode' => $data_periode2,
             'laporanPU' => $laporanPU,
             'dat_bulan' => $dat_bulan,
+            'data_tot_bulan' => $data_tot_bulan,
         ]);
     }
 }

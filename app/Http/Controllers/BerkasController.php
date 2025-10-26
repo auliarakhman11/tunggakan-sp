@@ -116,6 +116,8 @@ class BerkasController extends Controller
             'user_id' => Auth::id(),
         ]);
 
+        History::where('berkas_id', $request->berkas_id)->update(['selesai' => 1]);
+
         $history = History::create([
             'berkas_id' => $request->berkas_id,
             'proses_id' => $request->proses_id + 1,
@@ -124,7 +126,7 @@ class BerkasController extends Controller
         ]);
 
         if (($request->proses_id + 1) == 13) {
-            History::where('berkas_id',$request->berkas_id)->update(['selesai' => 1]);
+            History::where('berkas_id', $request->berkas_id)->update(['selesai' => 1]);
         }
 
         $petugas_id = $request->petugas_id;
@@ -188,6 +190,8 @@ class BerkasController extends Controller
             'user_id' => Auth::id(),
         ]);
 
+        History::where('berkas_id', $request->berkas_id)->update(['selesai' => 1]);
+
         History::create([
             'berkas_id' => $berkas_id,
             'proses_id' => $proses_id,
@@ -197,7 +201,7 @@ class BerkasController extends Controller
         ]);
 
         if ($proses_id == 14) {
-            History::where('berkas_id',$berkas_id)->update(['selesai' => 1]);
+            History::where('berkas_id', $berkas_id)->update(['selesai' => 1]);
         }
 
         return true;
