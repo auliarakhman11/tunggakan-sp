@@ -136,13 +136,31 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="float-start">Laporan Petugas Ukur</h5>
-
+                                <div class="row mt-4">
+                                    <div class="col-9">
+                                        <div class="row justify-content-end">
+                                            @foreach ($petugas as $p)
+                                                <div class="col-3" style="font-size: 13px;">
+                                                    <label for="petugas{{ $p->id }}"><input id="petugas{{ $p->id }}" type="checkbox" value="{{ $p->id }}" name="petugas_id[]" checked> {{ $p->nm_petugas }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <input type="number" class="form-control form-control-sm" name="tahun" placeholder="Tahun" value="2025" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-1">
+                                        <button type="submit" class="btn btn-sm btn-primary float-end" id="btn_info_berkas"><i class="fas fa-search"></i> Cari</button>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="card-body ">
 
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-bordered">
+                                    <table class="table table-sm table-bordered" style="font-size: 12px;">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -152,10 +170,10 @@
                                                 <th>Tutup</th>
                                                 <th>Sisa</th>
                                                 @foreach ($dat_bulan as $db)
-                                                    <th>Petugas Ukur {{ $db->monthyear }}</th>
+                                                    <th>Petugas<br>Ukur<br>{{ $db.'/2025' }}</th>
                                                 @endforeach
-                                                <th>Total Berkas Petugas Ukur</th>
-                                                <th>Petugas Pemetaan</th>
+                                                <th>Total<br>Berkas<br>Petugas<br>Ukur</th>
+                                                <th>Petugas<br>Pemetaan</th>
                                                 <th>Pelaksana</th>
                                                 <th>Korsub</th>
                                                 <th>Kasi</th>

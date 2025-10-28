@@ -190,7 +190,7 @@ class BerkasController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        History::where('berkas_id', $request->berkas_id)->update(['selesai' => 1]);
+        History::where('berkas_id', $berkas_id)->update(['selesai' => 1]);
 
         History::create([
             'berkas_id' => $berkas_id,
