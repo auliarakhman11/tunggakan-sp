@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     //laporan
     Route::get('/', [LaporanController::class, 'index'])->name('laporan');
     Route::get('getLaporanPetugasUkur',[LaporanController::class,'getLaporanPetugasUkur'])->name('getLaporanPetugasUkur');
+    Route::get('pdfLaporanPU', [LaporanController::class,'pdfLaporanPU'])->name('pdfLaporanPU');
     //endLaporan
 
     //user

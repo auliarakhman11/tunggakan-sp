@@ -139,6 +139,7 @@ class BerkasController extends Controller
                     'history_id' => $history->id,
                     'proses_id' => $request->proses_id + 1,
                     'petugas_id' => $petugas_id[$count],
+                    'tgl' => $request->tgl,
                     'user_id' => Auth::id(),
                     'void' => 0
                 ]);
