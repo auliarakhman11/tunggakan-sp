@@ -10,5 +10,5 @@ class Catatan extends Model
     use HasFactory;
 
     protected $table = 'catatan';
-    protected $fillable = ['berkas_id', 'isi_catatan', 'user_id'];
+    protected $fillable = ['berkas_id', 'isi_catatan','tgl', 'user_id'];
 }

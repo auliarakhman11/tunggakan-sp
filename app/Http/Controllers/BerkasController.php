@@ -164,6 +164,7 @@ class BerkasController extends Controller
     {
         Catatan::create([
             'isi_catatan' => $request->isi_catatan,
+            'tgl' => $request->tgl,
             'berkas_id' => $request->berkas_id,
             'user_id' => Auth::id(),
         ]);
