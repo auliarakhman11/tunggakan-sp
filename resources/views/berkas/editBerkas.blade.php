@@ -27,4 +27,18 @@
         </div>
     </div>
 
+    <div class="col-6">
+        <div class="form-group">
+            <label for="">Nama Pemohon</label>
+            <input type="text" class="form-control" name="nm_pemohon" value="{{ $berkas->nm_pemohon }}" required>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="form-group">
+            <label for="">Jenis Kegiatan</label>
+            <input type="text" class="form-control" name="jenis_kegiatan" value="{{ $berkas->jenis_kegiatan }}"
+                required>
+        </div>
+    </div>
+
 </div>

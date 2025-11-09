@@ -10,7 +10,7 @@ class Berkas extends Model
     use HasFactory;
 
     protected $table = 'berkas';
-    protected $fillable = ['proses_id', 'no_berkas', 'tahun', 'kelurahan', 'tgl', 'void', 'user_id'];
+    protected $fillable = ['proses_id', 'no_berkas', 'tahun', 'nm_pemohon', 'jenis_kegiatan', 'kelurahan', 'tgl', 'void', 'user_id'];
 
 
     public function user()

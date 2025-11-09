@@ -141,25 +141,30 @@
                                         <div class="row justify-content-end">
                                             @foreach ($petugas as $p)
                                                 <div class="col-3" style="font-size: 13px;">
-                                                    <label for="petugas{{ $p->id }}"><input class="petugas_id" id="petugas{{ $p->id }}" type="checkbox" value="{{ $p->id }}" name="petugas_id" checked> {{ $p->nm_petugas }}</label>
+                                                    <label for="petugas{{ $p->id }}"><input class="petugas_id"
+                                                            id="petugas{{ $p->id }}" type="checkbox"
+                                                            value="{{ $p->id }}" name="petugas_id" checked>
+                                                        {{ $p->nm_petugas }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="form-group">
-                                            <input type="number" class="form-control form-control-sm" name="tahun" id="tahun" placeholder="Tahun" value="2025" required>
+                                            <input type="number" class="form-control form-control-sm" name="tahun"
+                                                id="tahun" placeholder="Tahun" value="2025" required>
                                         </div>
                                     </div>
                                     <div class="col-1">
-                                        <button type="button" class="btn btn-sm btn-primary float-end" id="btn_getLaporanPetugasUkur"><i class="fas fa-search"></i> Cari</button>
+                                        <button type="button" class="btn btn-sm btn-primary float-end"
+                                            id="btn_getLaporanPetugasUkur"><i class="fas fa-search"></i> Cari</button>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="card-body" id="table_laporan_pu">
 
-                                
+
 
                             </div>
 
@@ -177,6 +182,26 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
+    <div class="modal fade" id="modal_detail_laporan_pu" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Laporan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="table_detail_laporan">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @section('script')
     <script>
         var cData = JSON.parse(`<?php echo $chart; ?>`);
@@ -250,7 +275,7 @@
             //     });
 
             // });
-            
+
 
             $(document).on('click', '#btn_getLaporanPetugasUkur', function() {
                 var tahun = $('#tahun').val();
@@ -265,7 +290,7 @@
                 // console.log(petugas_id);
             });
 
-            
+
 
             function getLaporanPetugasUkur(petugas_id = [], tahun = '2025') {
                 $('#table_laporan_pu').html(
@@ -291,11 +316,77 @@
 
             var dt_tahun = $('#tahun').val();
             let dt_petugas_id = [];
-                $('input[name="petugas_id"]:checked').each(function(index, element) {
+            $('input[name="petugas_id"]:checked').each(function(index, element) {
 
-                    dt_petugas_id.push($(this).val());
-                });
+                dt_petugas_id.push($(this).val());
+            });
             getLaporanPetugasUkur(dt_petugas_id, dt_tahun);
+
+            $(document).on('click', '.detail_laporan_pu', function() {
+                var tahun = $(this).attr('tahun');
+                var petugas_id = $(this).attr('petugas_id');
+
+                $('#table_detail_laporan').html(
+                    'Loading... <div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>'
+                );
+
+                $.ajax({
+                    url: "{{ route('getDetailLaporanPu') }}",
+                    method: "GET",
+                    data: {
+                        petugas_id: petugas_id,
+                        tahun: tahun
+                    },
+                    success: function(data) {
+                        $('#table_detail_laporan').html(data);
+                    }
+
+                });
+            });
+
+            $(document).on('click', '.detail_laporan_lainnya', function() {
+                var tahun = $(this).attr('tahun');
+                var proses_id = $(this).attr('proses_id');
+
+                $('#table_detail_laporan').html(
+                    'Loading... <div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>'
+                );
+
+                $.ajax({
+                    url: "{{ route('getdDetailLaporanLainnya') }}",
+                    method: "GET",
+                    data: {
+                        proses_id: proses_id,
+                        tahun: tahun
+                    },
+                    success: function(data) {
+                        $('#table_detail_laporan').html(data);
+                    }
+
+                });
+            });
+
+            $(document).on('click', '.detail_laporan_pelaksana', function() {
+                var tahun = $(this).attr('tahun');
+
+                $('#table_detail_laporan').html(
+                    'Loading... <div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>'
+                );
+
+                $.ajax({
+                    url: "{{ route('getdDetailLaporanPelaksana') }}",
+                    method: "GET",
+                    data: {
+                        tahun: tahun
+                    },
+                    success: function(data) {
+                        $('#table_detail_laporan').html(data);
+                    }
+
+                });
+            });
+
+
 
         });
     </script>

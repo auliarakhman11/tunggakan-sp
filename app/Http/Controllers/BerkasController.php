@@ -54,6 +54,8 @@ class BerkasController extends Controller
             'no_berkas' => $request->no_berkas,
             'tahun' => $request->tahun,
             'kelurahan' => $request->kelurahan,
+            'nm_pemohon' => $request->nm_pemohon,
+            'jenis_kegiatan' => $request->jenis_kegiatan,
             'tgl' => $request->tgl,
             'user_id' => Auth::id(),
             'void' => 0,
@@ -82,6 +84,8 @@ class BerkasController extends Controller
             'no_berkas' => $request->no_berkas,
             'tahun' => $request->tahun,
             'kelurahan' => $request->kelurahan,
+            'nm_pemohon' => $request->nm_pemohon,
+            'jenis_kegiatan' => $request->jenis_kegiatan,
             'tgl' => $request->tgl,
             'user_id' => Auth::id(),
         ]);

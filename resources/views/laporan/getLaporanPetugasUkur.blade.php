@@ -46,8 +46,7 @@
                     $ttl_berkas += $d['ttl_berkas'];
                     $ttl_selesai += $d['ttl_selesai'];
                     $ttl_tutup += $d['ttl_tutup'];
-                    $ttl_sisa +=
-                        $d['ttl_berkas'] - ($d['ttl_selesai'] + $d['ttl_tutup']);
+                    $ttl_sisa += $d['ttl_berkas'] - ($d['ttl_selesai'] + $d['ttl_tutup']);
 
                     $ttl_pemetaan += $d['ttl_pemetaan'];
                     $ttl_pelaksana += $d['ttl_pelaksana'];
@@ -70,7 +69,9 @@
                             $tot_pu += $db;
                         @endphp
                     @endforeach
-                    <td>{{ $tot_pu }}</td>
+                    <td><a href="#modal_detail_laporan_pu" data-toggle="modal" class="detail_laporan_pu"
+                            petugas_id="{{ $d['petugas_id'] }}"
+                            tahun="{{ $tahun }}"><u>{{ $tot_pu }}</u></a></td>
                     <td>{{ $d['ttl_pemetaan'] }}</td>
                     <td>{{ $d['ttl_pelaksana'] }}</td>
                     <td>{{ $d['ttl_korsub'] }}</td>
@@ -94,10 +95,15 @@
                     <td><b>{{ $dtb['tot'] }}</b></td>
                 @endforeach
                 <td><b>{{ $ttl_pu }}</b></td>
-                <td><b>{{ $ttl_pemetaan }}</b></td>
-                <td><b>{{ $ttl_pelaksana }}</b></td>
-                <td><b>{{ $ttl_korsub }}</b></td>
-                <td><b>{{ $ttl_kasi }}</b></td>
+                <td><b><a href="#modal_detail_laporan_pu" data-toggle="modal" class="detail_laporan_lainnya"
+                            tahun="{{ $tahun }}" proses_id="7"><u>{{ $ttl_pemetaan }}</u></a></b></td>
+                <td><b><a href="#modal_detail_laporan_pu" data-toggle="modal" class="detail_laporan_pelaksana"
+                            tahun="{{ $tahun }}" proses_id=""><u>{{ $ttl_pelaksana }}</u></a></b>
+                </td>
+                <td><b><a href="#modal_detail_laporan_pu" data-toggle="modal" class="detail_laporan_lainnya"
+                            tahun="{{ $tahun }}" proses_id="9"><u>{{ $ttl_korsub }}</u></a></b></td>
+                <td><b><a href="#modal_detail_laporan_pu" data-toggle="modal" class="detail_laporan_lainnya"
+                            tahun="{{ $tahun }}" proses_id="11"><u>{{ $ttl_kasi }}</u></a></b></td>
             </tr>
         </tfoot>
     </table>

@@ -98,7 +98,7 @@ class LaporanController extends Controller
         //     ->with(['petugas'])
         //     ->get();
 
-        
+
 
 
         return view('laporan.index', [
@@ -114,10 +114,11 @@ class LaporanController extends Controller
         ]);
     }
 
-    public function getLaporanPetugasUkur(Request $request){
+    public function getLaporanPetugasUkur(Request $request)
+    {
         $petugas_id = $request->petugas_id;
 
-        if(empty($petugas_id) || !isset($petugas_id)){
+        if (empty($petugas_id) || !isset($petugas_id)) {
 
             $dat_petugas = Petugas::all();
 
@@ -176,7 +177,7 @@ class LaporanController extends Controller
                 foreach ($dat_bulan as $db) {
                     $dat_belum = 0;
                     foreach ($dt_petugas_berkas as $dpb2) {
-                        $dt_belum = $dat_history->where('tgl', '>=', $request->tahun.'-'.$db.'-01')->where('tgl', '<=', date("Y-m-t", strtotime($request->tahun.'-'.$db.'-01')))->where('berkas_id', $dpb2->berkas_id)->where('selesai', 0)->where('proses_id', 5)->groupBy('berkas_id')->count();
+                        $dt_belum = $dat_history->where('tgl', '>=', $request->tahun . '-' . $db . '-01')->where('tgl', '<=', date("Y-m-t", strtotime($request->tahun . '-' . $db . '-01')))->where('berkas_id', $dpb2->berkas_id)->where('selesai', 0)->where('proses_id', 5)->groupBy('berkas_id')->count();
                         $dat_belum += $dt_belum;
                     }
 
@@ -200,32 +201,31 @@ class LaporanController extends Controller
 
             $data_tot_bulan = [];
             foreach ($dat_bulan as $db) {
-                $dt_ttl_belum = $dat_history->where('tgl', '>=', $request->tahun.'-'.$db.'-01')->where('tgl', '<=', date("Y-m-t", strtotime($request->tahun.'-'.$db.'-01')))->where('selesai', 0)->where('proses_id', 5)->count();
-                $data_tot_bulan[] = ['tgl' => $request->tahun.'-'.$db.'-01', 'tot' => $dt_ttl_belum];
+                $dt_ttl_belum = $dat_history->where('tgl', '>=', $request->tahun . '-' . $db . '-01')->where('tgl', '<=', date("Y-m-t", strtotime($request->tahun . '-' . $db . '-01')))->where('selesai', 0)->where('proses_id', 5)->count();
+                $data_tot_bulan[] = ['tgl' => $request->tahun . '-' . $db . '-01', 'tot' => $dt_ttl_belum];
             }
-
-        }else{
+        } else {
             $dat_bulan = [
-                $request->tahun.'-01',
-                $request->tahun.'-02',
-                $request->tahun.'-03',
-                $request->tahun.'-04',
-                $request->tahun.'-05',
-                $request->tahun.'-06',
-                $request->tahun.'-07',
-                $request->tahun.'-08',
-                $request->tahun.'-09',
-                $request->tahun.'-10',
-                $request->tahun.'-11',
-                $request->tahun.'-12',
+                $request->tahun . '-01',
+                $request->tahun . '-02',
+                $request->tahun . '-03',
+                $request->tahun . '-04',
+                $request->tahun . '-05',
+                $request->tahun . '-06',
+                $request->tahun . '-07',
+                $request->tahun . '-08',
+                $request->tahun . '-09',
+                $request->tahun . '-10',
+                $request->tahun . '-11',
+                $request->tahun . '-12',
             ];
-            $dat_petugas = Petugas::whereIn('id',$petugas_id)->get();
-            $dat_petugas_berkas = PetugasBerkas::select('petugas_berkas.petugas_id', 'petugas_berkas.berkas_id','berkas.tgl')->leftJoin('berkas','petugas_berkas.berkas_id','=','berkas.id')->where('petugas_berkas.void', 0)->where('petugas_berkas.proses_id', 5)->where('berkas.tgl', '>=', $request->tahun.'-01-01')->where('berkas.tgl', '<=', $request->tahun.'-12-31')->groupBy('petugas_berkas.petugas_id')->groupBy('petugas_berkas.berkas_id')->get();
-            $dat_history = History::select('history.proses_id','history.selesai','history.void','history.berkas_id','berkas.tgl')->leftJoin('berkas','history.berkas_id','=','berkas.id')->where('history.void', 0)->where('berkas.tgl', '>=', $request->tahun.'-01-01')->where('berkas.tgl', '<=', $request->tahun.'-12-31')->get();
+            $dat_petugas = Petugas::whereIn('id', $petugas_id)->get();
+            $dat_petugas_berkas = PetugasBerkas::select('petugas_berkas.petugas_id', 'petugas_berkas.berkas_id', 'berkas.tgl')->leftJoin('berkas', 'petugas_berkas.berkas_id', '=', 'berkas.id')->where('petugas_berkas.void', 0)->where('petugas_berkas.proses_id', 5)->where('berkas.tgl', '>=', $request->tahun . '-01-01')->where('berkas.tgl', '<=', $request->tahun . '-12-31')->groupBy('petugas_berkas.petugas_id')->groupBy('petugas_berkas.berkas_id')->get();
+            $dat_history = History::select('history.proses_id', 'history.selesai', 'history.void', 'history.berkas_id', 'berkas.tgl')->leftJoin('berkas', 'history.berkas_id', '=', 'berkas.id')->where('history.void', 0)->where('berkas.tgl', '>=', $request->tahun . '-01-01')->where('berkas.tgl', '<=', $request->tahun . '-12-31')->get();
             // $dat_bulan = History::selectRaw("DATE_FORMAT(tgl, '%m/%Y') monthyear, DATE_FORMAT(tgl, '%Y-%m-01') as tgl1, YEAR(tgl) year, MONTH(tgl) month")->groupby('year', 'month')->get();
-            
 
-            $dat_berkas = Berkas::where('void', 0)->where('tgl', '>=', $request->tahun.'-01-01')->where('tgl', '<=', $request->tahun.'-12-31')->get();
+
+            $dat_berkas = Berkas::where('void', 0)->where('tgl', '>=', $request->tahun . '-01-01')->where('tgl', '<=', $request->tahun . '-12-31')->get();
 
             $laporanPU = [];
             foreach ($dat_petugas as $dp) {
@@ -262,7 +262,7 @@ class LaporanController extends Controller
                 foreach ($dat_bulan as $db) {
                     $dat_belum = 0;
                     foreach ($dt_petugas_berkas as $dpb2) {
-                        $dt_belum = $dat_history->where('tgl', '>=', $db.'-01')->where('tgl', '<=', date("Y-m-t", strtotime($db.'-01')))->where('berkas_id', $dpb2->berkas_id)->where('selesai', 0)->where('proses_id', 5)->groupBy('berkas_id')->count();
+                        $dt_belum = $dat_history->where('tgl', '>=', $db . '-01')->where('tgl', '<=', date("Y-m-t", strtotime($db . '-01')))->where('berkas_id', $dpb2->berkas_id)->where('selesai', 0)->where('proses_id', 5)->groupBy('berkas_id')->count();
                         $dat_belum += $dt_belum;
                     }
 
@@ -271,6 +271,7 @@ class LaporanController extends Controller
 
 
                 $laporanPU[] = [
+                    'petugas_id' => $dp->id,
                     'nm_petugas' => $dp->nm_petugas,
                     'ttl_berkas' => $ttl_berkas,
                     'ttl_selesai' => $ttl_selesai,
@@ -286,8 +287,8 @@ class LaporanController extends Controller
 
             $data_tot_bulan = [];
             foreach ($dat_bulan as $db) {
-                $dt_ttl_belum = $dat_history->where('tgl', '>=', $db.'-01')->where('tgl', '<=', date("Y-m-t", strtotime($db.'-01')))->where('selesai', 0)->where('proses_id', 5)->count();
-                $data_tot_bulan[] = ['tgl' => $db.'-01', 'tot' => $dt_ttl_belum];
+                $dt_ttl_belum = $dat_history->where('tgl', '>=', $db . '-01')->where('tgl', '<=', date("Y-m-t", strtotime($db . '-01')))->where('selesai', 0)->where('proses_id', 5)->count();
+                $data_tot_bulan[] = ['tgl' => $db . '-01', 'tot' => $dt_ttl_belum];
             }
         }
 
@@ -298,7 +299,6 @@ class LaporanController extends Controller
             'tahun' => $request->tahun,
             'petugas_id' => $petugas_id
         ]);
-
     }
 
     public function pdfLaporanPU(Request $request)
@@ -306,96 +306,96 @@ class LaporanController extends Controller
         $petugas_id = $request->petugas_id;
 
         $dat_bulan = [
-                $request->tahun.'-01',
-                $request->tahun.'-02',
-                $request->tahun.'-03',
-                $request->tahun.'-04',
-                $request->tahun.'-05',
-                $request->tahun.'-06',
-                $request->tahun.'-07',
-                $request->tahun.'-08',
-                $request->tahun.'-09',
-                $request->tahun.'-10',
-                $request->tahun.'-11',
-                $request->tahun.'-12',
-            ];
-            $dat_petugas = Petugas::whereIn('id',$petugas_id)->get();
-            $dat_petugas_berkas = PetugasBerkas::select('petugas_berkas.petugas_id', 'petugas_berkas.berkas_id','berkas.tgl')->leftJoin('berkas','petugas_berkas.berkas_id','=','berkas.id')->where('petugas_berkas.void', 0)->where('petugas_berkas.proses_id', 5)->where('berkas.tgl', '>=', $request->tahun.'-01-01')->where('berkas.tgl', '<=', $request->tahun.'-12-31')->groupBy('petugas_berkas.petugas_id')->groupBy('petugas_berkas.berkas_id')->get();
-            $dat_history = History::select('history.proses_id','history.selesai','history.void','history.berkas_id','berkas.tgl')->leftJoin('berkas','history.berkas_id','=','berkas.id')->where('history.void', 0)->where('berkas.tgl', '>=', $request->tahun.'-01-01')->where('berkas.tgl', '<=', $request->tahun.'-12-31')->get();
-            // $dat_bulan = History::selectRaw("DATE_FORMAT(tgl, '%m/%Y') monthyear, DATE_FORMAT(tgl, '%Y-%m-01') as tgl1, YEAR(tgl) year, MONTH(tgl) month")->groupby('year', 'month')->get();
-            
-
-            $dat_berkas = Berkas::where('void', 0)->where('tgl', '>=', $request->tahun.'-01-01')->where('tgl', '<=', $request->tahun.'-12-31')->get();
-
-            $laporanPU = [];
-            foreach ($dat_petugas as $dp) {
-                $ttl_berkas = 0;
-                $ttl_selesai = 0;
-                $ttl_tutup = 0;
-
-                $ttl_pemetaan = 0;
-                $ttl_pelaksana = 0;
-                $ttl_korsub = 0;
-                $ttl_kasi = 0;
-                $dt_petugas_berkas = $dat_petugas_berkas->where('petugas_id', $dp->id)->all();
-                foreach ($dt_petugas_berkas as $dpb) {
-                    $dt_berkas = $dat_history->where('berkas_id', $dpb->berkas_id)->groupBy('berkas_id')->count();
-                    $dt_selesai = $dat_history->where('berkas_id', $dpb->berkas_id)->where('proses_id', 13)->count();
-                    $dt_tutup = $dat_history->where('berkas_id', $dpb->berkas_id)->where('proses_id', 14)->count();
-
-                    $dt_pemetaan = $dat_berkas->where('id', $dpb->berkas_id)->where('proses_id', 7)->count();
-                    $dt_pelaksana = $dat_berkas->where('id', $dpb->berkas_id)->whereIn('proses_id', [6, 8, 10, 12])->count();
-                    $dt_korsub = $dat_berkas->where('id', $dpb->berkas_id)->where('proses_id', 9)->count();
-                    $dt_kasi = $dat_berkas->where('id', $dpb->berkas_id)->where('proses_id', 11)->count();
-
-                    $ttl_berkas += $dt_berkas;
-                    $ttl_selesai += $dt_selesai;
-                    $ttl_tutup += $dt_tutup;
-                    $ttl_pemetaan += $dt_pemetaan;
-                    $ttl_pelaksana += $dt_pelaksana;
-                    $ttl_korsub += $dt_korsub;
-                    $ttl_kasi += $dt_kasi;
-                }
-
-                $data_perbulan = [];
-
-                foreach ($dat_bulan as $db) {
-                    $dat_belum = 0;
-                    foreach ($dt_petugas_berkas as $dpb2) {
-                        $dt_belum = $dat_history->where('tgl', '>=', $db.'-01')->where('tgl', '<=', date("Y-m-t", strtotime($db.'-01')))->where('berkas_id', $dpb2->berkas_id)->where('selesai', 0)->where('proses_id', 5)->groupBy('berkas_id')->count();
-                        $dat_belum += $dt_belum;
-                    }
-
-                    $data_perbulan[] = $dat_belum;
-                }
+            $request->tahun . '-01',
+            $request->tahun . '-02',
+            $request->tahun . '-03',
+            $request->tahun . '-04',
+            $request->tahun . '-05',
+            $request->tahun . '-06',
+            $request->tahun . '-07',
+            $request->tahun . '-08',
+            $request->tahun . '-09',
+            $request->tahun . '-10',
+            $request->tahun . '-11',
+            $request->tahun . '-12',
+        ];
+        $dat_petugas = Petugas::whereIn('id', $petugas_id)->get();
+        $dat_petugas_berkas = PetugasBerkas::select('petugas_berkas.petugas_id', 'petugas_berkas.berkas_id', 'berkas.tgl')->leftJoin('berkas', 'petugas_berkas.berkas_id', '=', 'berkas.id')->where('petugas_berkas.void', 0)->where('petugas_berkas.proses_id', 5)->where('berkas.tgl', '>=', $request->tahun . '-01-01')->where('berkas.tgl', '<=', $request->tahun . '-12-31')->groupBy('petugas_berkas.petugas_id')->groupBy('petugas_berkas.berkas_id')->get();
+        $dat_history = History::select('history.proses_id', 'history.selesai', 'history.void', 'history.berkas_id', 'berkas.tgl')->leftJoin('berkas', 'history.berkas_id', '=', 'berkas.id')->where('history.void', 0)->where('berkas.tgl', '>=', $request->tahun . '-01-01')->where('berkas.tgl', '<=', $request->tahun . '-12-31')->get();
+        // $dat_bulan = History::selectRaw("DATE_FORMAT(tgl, '%m/%Y') monthyear, DATE_FORMAT(tgl, '%Y-%m-01') as tgl1, YEAR(tgl) year, MONTH(tgl) month")->groupby('year', 'month')->get();
 
 
-                $laporanPU[] = [
-                    'nm_petugas' => $dp->nm_petugas,
-                    'ttl_berkas' => $ttl_berkas,
-                    'ttl_selesai' => $ttl_selesai,
-                    'ttl_tutup' => $ttl_tutup,
-                    'data_perbulan' => $data_perbulan,
-                    'ttl_pemetaan' => $ttl_pemetaan,
-                    'ttl_pelaksana' => $ttl_pelaksana,
-                    'ttl_korsub' => $ttl_korsub,
-                    'ttl_kasi' => $ttl_kasi,
+        $dat_berkas = Berkas::where('void', 0)->where('tgl', '>=', $request->tahun . '-01-01')->where('tgl', '<=', $request->tahun . '-12-31')->get();
 
-                ];
+        $laporanPU = [];
+        foreach ($dat_petugas as $dp) {
+            $ttl_berkas = 0;
+            $ttl_selesai = 0;
+            $ttl_tutup = 0;
+
+            $ttl_pemetaan = 0;
+            $ttl_pelaksana = 0;
+            $ttl_korsub = 0;
+            $ttl_kasi = 0;
+            $dt_petugas_berkas = $dat_petugas_berkas->where('petugas_id', $dp->id)->all();
+            foreach ($dt_petugas_berkas as $dpb) {
+                $dt_berkas = $dat_history->where('berkas_id', $dpb->berkas_id)->groupBy('berkas_id')->count();
+                $dt_selesai = $dat_history->where('berkas_id', $dpb->berkas_id)->where('proses_id', 13)->count();
+                $dt_tutup = $dat_history->where('berkas_id', $dpb->berkas_id)->where('proses_id', 14)->count();
+
+                $dt_pemetaan = $dat_berkas->where('id', $dpb->berkas_id)->where('proses_id', 7)->count();
+                $dt_pelaksana = $dat_berkas->where('id', $dpb->berkas_id)->whereIn('proses_id', [6, 8, 10, 12])->count();
+                $dt_korsub = $dat_berkas->where('id', $dpb->berkas_id)->where('proses_id', 9)->count();
+                $dt_kasi = $dat_berkas->where('id', $dpb->berkas_id)->where('proses_id', 11)->count();
+
+                $ttl_berkas += $dt_berkas;
+                $ttl_selesai += $dt_selesai;
+                $ttl_tutup += $dt_tutup;
+                $ttl_pemetaan += $dt_pemetaan;
+                $ttl_pelaksana += $dt_pelaksana;
+                $ttl_korsub += $dt_korsub;
+                $ttl_kasi += $dt_kasi;
             }
 
-            $data_tot_bulan = [];
+            $data_perbulan = [];
+
             foreach ($dat_bulan as $db) {
-                $dt_ttl_belum = $dat_history->where('tgl', '>=', $db.'-01')->where('tgl', '<=', date("Y-m-t", strtotime($db.'-01')))->where('selesai', 0)->where('proses_id', 5)->count();
-                $data_tot_bulan[] = ['tgl' => $db.'-01', 'tot' => $dt_ttl_belum];
+                $dat_belum = 0;
+                foreach ($dt_petugas_berkas as $dpb2) {
+                    $dt_belum = $dat_history->where('tgl', '>=', $db . '-01')->where('tgl', '<=', date("Y-m-t", strtotime($db . '-01')))->where('berkas_id', $dpb2->berkas_id)->where('selesai', 0)->where('proses_id', 5)->groupBy('berkas_id')->count();
+                    $dat_belum += $dt_belum;
+                }
+
+                $data_perbulan[] = $dat_belum;
             }
 
-         $data = [
-                'laporanPU' => $laporanPU,
+
+            $laporanPU[] = [
+                'nm_petugas' => $dp->nm_petugas,
+                'ttl_berkas' => $ttl_berkas,
+                'ttl_selesai' => $ttl_selesai,
+                'ttl_tutup' => $ttl_tutup,
+                'data_perbulan' => $data_perbulan,
+                'ttl_pemetaan' => $ttl_pemetaan,
+                'ttl_pelaksana' => $ttl_pelaksana,
+                'ttl_korsub' => $ttl_korsub,
+                'ttl_kasi' => $ttl_kasi,
+
+            ];
+        }
+
+        $data_tot_bulan = [];
+        foreach ($dat_bulan as $db) {
+            $dt_ttl_belum = $dat_history->where('tgl', '>=', $db . '-01')->where('tgl', '<=', date("Y-m-t", strtotime($db . '-01')))->where('selesai', 0)->where('proses_id', 5)->count();
+            $data_tot_bulan[] = ['tgl' => $db . '-01', 'tot' => $dt_ttl_belum];
+        }
+
+        $data = [
+            'laporanPU' => $laporanPU,
             'dat_bulan' => $dat_bulan,
             'data_tot_bulan' => $data_tot_bulan,
-            ];
-        $pdf = Pdf::loadView('laporan.pdfLaporanPU',$data)->setPaper('a4','landscape');
+        ];
+        $pdf = Pdf::loadView('laporan.pdfLaporanPU', $data)->setPaper('a4', 'landscape');
         // return $pdf->download('test.pdf');
         return $pdf->stream();
         // return view('ba_st.print_st',[
@@ -403,4 +403,49 @@ class LaporanController extends Controller
         // ]);
     }
 
+    public function getDetailLaporanPu(Request $request)
+    {
+        $dt_history = PetugasBerkas::select('berkas.tgl', 'proses.nm_proses', 'berkas.no_berkas', 'berkas.tahun', 'berkas.nm_pemohon', 'berkas.jenis_kegiatan', 'berkas.kelurahan', 'petugas.nm_petugas')->leftJoin('proses', 'petugas_berkas.proses_id', '=', 'proses.id')->leftJoin('petugas', 'petugas_berkas.petugas_id', '=', 'petugas.id')->leftJoin('history', 'petugas_berkas.history_id', '=', 'history.id')->leftJoin('berkas', 'petugas_berkas.berkas_id', '=', 'berkas.id')->where('petugas_berkas.void', 0)->where('petugas_berkas.proses_id', 5)->where('history.selesai', 0)->whereYear('petugas_berkas.tgl', $request->tahun)->where('petugas_berkas.petugas_id', $request->petugas_id)->groupBy('petugas_berkas.berkas_id')->get();
+
+        return view('laporan.getDetailLaporanPu', [
+            'dt_history' => $dt_history,
+            'tahun' => $request->tahun,
+        ]);
+    }
+
+    public function getdDetailLaporanLainnya(Request $request)
+    {
+        $dt_history = History::select('berkas.tgl', 'proses.nm_proses', 'berkas.no_berkas', 'berkas.tahun', 'berkas.nm_pemohon', 'berkas.jenis_kegiatan', 'berkas.kelurahan')->selectRaw('dt_pu.nm_petugas')
+            ->leftJoin('proses', 'history.proses_id', '=', 'proses.id')->leftJoin('berkas', 'history.berkas_id', '=', 'berkas.id')
+            ->leftJoin(
+                DB::raw("(SELECT berkas_id, petugas.nm_petugas FROM petugas_berkas LEFT JOIN petugas ON petugas_berkas.petugas_id = petugas.id WHERE proses_id = 5 GROUP BY berkas_id) dt_pu"),
+                'history.berkas_id',
+                '=',
+                'dt_pu.berkas_id'
+            )
+            ->where('history.void', 0)->where('history.proses_id', $request->proses_id)->where('history.selesai', 0)->whereYear('history.tgl', $request->tahun)->groupBy('history.berkas_id')->get();
+
+        return view('laporan.getDetailLaporanPu', [
+            'dt_history' => $dt_history,
+            'tahun' => $request->tahun,
+        ]);
+    }
+
+    public function getdDetailLaporanPelaksana(Request $request)
+    {
+        $dt_history = History::select('berkas.tgl', 'proses.nm_proses', 'berkas.no_berkas', 'berkas.tahun', 'berkas.nm_pemohon', 'berkas.jenis_kegiatan', 'berkas.kelurahan')->selectRaw('dt_pu.nm_petugas')
+            ->leftJoin('proses', 'history.proses_id', '=', 'proses.id')->leftJoin('berkas', 'history.berkas_id', '=', 'berkas.id')
+            ->leftJoin(
+                DB::raw("(SELECT berkas_id, petugas.nm_petugas FROM petugas_berkas LEFT JOIN petugas ON petugas_berkas.petugas_id = petugas.id WHERE proses_id = 5 GROUP BY berkas_id) dt_pu"),
+                'history.berkas_id',
+                '=',
+                'dt_pu.berkas_id'
+            )
+            ->where('history.void', 0)->whereIn('history.proses_id', [6, 8, 10, 12])->where('history.selesai', 0)->whereYear('history.tgl', $request->tahun)->groupBy('history.berkas_id')->get();
+
+        return view('laporan.getDetailLaporanPu', [
+            'dt_history' => $dt_history,
+            'tahun' => $request->tahun,
+        ]);
+    }
 }

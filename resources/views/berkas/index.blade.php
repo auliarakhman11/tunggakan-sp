@@ -61,7 +61,8 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-hover" id="table_berkas" width="100%" style="font-size: 13px;">
+                                    <table class="table table-sm table-hover" id="table_berkas" width="100%"
+                                        style="font-size: 13px;">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -69,6 +70,8 @@
                                                 <th>Proses</th>
                                                 <th>Nomor</th>
                                                 <th>Tahun</th>
+                                                <th>Nama Pemohon</th>
+                                                <th>Jenis Kegiatan</th>
                                                 <th>Kelurahan</th>
                                                 <th>Aksi</th>
                                                 <th>Manipulasi</th>
@@ -125,6 +128,20 @@
                                 <div class="form-group">
                                     <label for="">Tahun</label>
                                     <input type="text" class="form-control" id="tahun" name="tahun" required>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Nama Pemohon</label>
+                                    <input type="text" class="form-control" id="nm_pemohon" name="nm_pemohon" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Jenis Kegiatan</label>
+                                    <input type="text" class="form-control" id="jenis_kegiatan" name="jenis_kegiatan"
+                                        required>
                                 </div>
                             </div>
 
@@ -294,7 +311,7 @@
                     {
                         data: 'tanggal',
                         name: 'dt_tanggal.tanggal'
-                    }, 
+                    },
                     {
                         data: 'proses.nm_proses',
                         name: 'proses.nm_proses'
@@ -306,6 +323,14 @@
                     {
                         data: 'tahun',
                         name: 'berkas.tahun'
+                    },
+                    {
+                        data: 'nm_pemohon',
+                        name: 'berkas.nm_pemohon'
+                    },
+                    {
+                        data: 'jenis_kegiatan',
+                        name: 'berkas.jenis_kegiatan'
                     },
                     {
                         data: 'kelurahan',
@@ -507,27 +532,31 @@
 
             });
 
-            var dt_proses = ['dt_proses','Korsub (Penunjukan ST)', 'Pelaksana', 'Kasi', 'Petugas Ukur', 'Pelaksana', 'Pemetaan', 'Pelaksana', 'Korsub', 'Pelaksana', 'Kasi', 'Pelaksana', 'Selesai'];
+            var dt_proses = ['dt_proses', 'Korsub (Penunjukan ST)', 'Pelaksana', 'Kasi', 'Petugas Ukur',
+                'Pelaksana', 'Pemetaan', 'Pelaksana', 'Korsub', 'Pelaksana', 'Kasi', 'Pelaksana', 'Selesai'
+            ];
 
             $(document).on('click', '.btn_lanjut_berkas', function() {
                 var berkas_id = $(this).attr('berkas_id');
                 var proses_id = $(this).attr('proses_id');
                 var proses_selanjutnya = dt_proses[proses_id];
-                
+
 
                 $('#berkas_id_lanjut').val(berkas_id);
                 $('#proses_id_lanjut').val(proses_id);
 
                 if (proses_id == 4 || proses_id == 6) {
                     $('#table_lanjut_berkas').html(
-                        '<h4>Apakah anda yakin ingin melanjutkan berkas ke '+proses_selanjutnya+'?</h4> <div class="row"><div class="col-10"><div class="form-group"><label for="">Petugas</label><select name="petugas_id[]" class="form-control" required><option value="">Pilih Pegawai</option>@foreach ($petugas as $p)<option value="{{ $p->id }}">{{ $p->nm_petugas }}</option>@endforeach</select></div></div><div class="col-2"></div></div>'
+                        '<h4>Apakah anda yakin ingin melanjutkan berkas ke ' + proses_selanjutnya +
+                        '?</h4> <div class="row"><div class="col-10"><div class="form-group"><label for="">Petugas</label><select name="petugas_id[]" class="form-control" required><option value="">Pilih Pegawai</option>@foreach ($petugas as $p)<option value="{{ $p->id }}">{{ $p->nm_petugas }}</option>@endforeach</select></div></div><div class="col-2"></div></div>'
                     );
                     $('#list_petugas').html('');
                     $('#button_table_tambah_pegawai').html(
                         '<button class="btn btn-sm btn-success float-right" type="button" id="button_tambah_pegawai">+</button>'
                     );
                 } else {
-                    $('#table_lanjut_berkas').html('<h4>Apakah anda yakin ingin melanjutkan berkas ke '+proses_selanjutnya+'?</h4>');
+                    $('#table_lanjut_berkas').html('<h4>Apakah anda yakin ingin melanjutkan berkas ke ' +
+                        proses_selanjutnya + '?</h4>');
                     $('#list_petugas').html('');
                     $('#button_table_tambah_pegawai').html('');
                 }

@@ -47,8 +47,12 @@ Route::middleware('auth')->group(function () {
 
     //laporan
     Route::get('/', [LaporanController::class, 'index'])->name('laporan');
-    Route::get('getLaporanPetugasUkur',[LaporanController::class,'getLaporanPetugasUkur'])->name('getLaporanPetugasUkur');
-    Route::get('pdfLaporanPU', [LaporanController::class,'pdfLaporanPU'])->name('pdfLaporanPU');
+    Route::get('getLaporanPetugasUkur', [LaporanController::class, 'getLaporanPetugasUkur'])->name('getLaporanPetugasUkur');
+    Route::get('pdfLaporanPU', [LaporanController::class, 'pdfLaporanPU'])->name('pdfLaporanPU');
+
+    Route::get('getDetailLaporanPu', [LaporanController::class, 'getDetailLaporanPu'])->name('getDetailLaporanPu');
+    Route::get('getdDetailLaporanLainnya', [LaporanController::class, 'getdDetailLaporanLainnya'])->name('getdDetailLaporanLainnya');
+    Route::get('getdDetailLaporanPelaksana', [LaporanController::class, 'getdDetailLaporanPelaksana'])->name('getdDetailLaporanPelaksana');
     //endLaporan
 
     //user
