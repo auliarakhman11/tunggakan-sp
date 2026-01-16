@@ -10,6 +10,7 @@ use App\Models\PetugasBerkas;
 use App\Models\Proses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
 class BerkasController extends Controller
@@ -122,11 +123,25 @@ class BerkasController extends Controller
 
         History::where('berkas_id', $request->berkas_id)->update(['selesai' => 1]);
 
+        $file_name = $request->file_name;
+
+        if ($request->hasFile('file_name')) {
+            $extension = $request->file('file_name')->extension();
+            $file_name = Str::random(5) . date('ymd') . '.' . $extension;
+            $request->file('file_name')->move('file_upload/', $file_name);
+        } else {
+            $extension = NULL;
+            $file_name = NULL;
+        }
+
+
         $history = History::create([
             'berkas_id' => $request->berkas_id,
             'proses_id' => $request->proses_id + 1,
             'tgl' => $request->tgl,
             'user_id' => Auth::id(),
+            'file_name' => $file_name,
+            'jenis_file' => $extension,
         ]);
 
         if (($request->proses_id + 1) == 13) {
@@ -149,6 +164,7 @@ class BerkasController extends Controller
                 ]);
             }
         }
+
 
 
 

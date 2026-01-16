@@ -10,7 +10,7 @@ class History extends Model
     use HasFactory;
 
     protected $table = 'history';
-    protected $fillable = ['berkas_id', 'proses_id', 'tgl', 'user_id', 'void', 'kembali','selesai'];
+    protected $fillable = ['berkas_id', 'proses_id', 'tgl', 'user_id', 'void', 'kembali', 'selesai', 'file_name', 'jenis_file'];
 
     public function berkas()
     {
@@ -19,7 +19,7 @@ class History extends Model
 
     public function proses()
     {
-        return $this->belongsTo(Proses::class,'proses_id','id');
+        return $this->belongsTo(Proses::class, 'proses_id', 'id');
     }
 
     public function petugasBerkas()
