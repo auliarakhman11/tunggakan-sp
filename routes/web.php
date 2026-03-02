@@ -43,6 +43,9 @@ Route::middleware('auth')->group(function () {
     Route::get('historyBerkas/{berkas_id}', [BerkasController::class, 'historyBerkas'])->name('historyBerkas');
     Route::get('berkasSelesai', [BerkasController::class, 'berkasSelesai'])->name('berkasSelesai');
     Route::get('getBerkasSelesai', [BerkasController::class, 'getBerkasSelesai'])->name('getBerkasSelesai');
+
+    Route::get('berkasTutup', [BerkasController::class,'berkasTutup'])->name('berkasTutup');
+    Route::get('getBerkasTutup', [BerkasController::class,'getBerkasTutup'])->name('getBerkasTutup');
     //endhome
 
     //laporan

@@ -147,7 +147,7 @@
                 processing: true,
                 serverSide: true, //aktifkan server-side 
                 ajax: {
-                    url: "{{ route('getBerkasSelesai') }}",
+                    url: "{{ route('getBerkasTutup') }}",
                     type: 'GET'
                 },
                 columns: [{

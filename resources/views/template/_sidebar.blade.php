@@ -77,8 +77,8 @@
                       </ul>
                   </li>
 
-                  <li class="nav-item {{ Request::is(['berkas', 'berkasSelesai']) ? 'menu-open' : '' }}">
-                      <a href="#" class="nav-link {{ Request::is(['berkas', 'berkasSelesai']) ? 'active' : '' }}">
+                  <li class="nav-item {{ Request::is(['berkas', 'berkasSelesai', 'berkasTutup']) ? 'menu-open' : '' }}">
+                      <a href="#" class="nav-link {{ Request::is(['berkas', 'berkasSelesai', 'berkasTutup']) ? 'active' : '' }}">
                           <i class="nav-icon fas fa-folder-open"></i>
                           <p>
                               Berkas
@@ -99,6 +99,13 @@
                                   class="nav-link {{ Request::is('berkasSelesai') ? 'active' : '' }}">
                                   <i class="fas fa-minus nav-icon"></i>
                                   <p>List Berkas Selesai</p>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="{{ route('berkasTutup') }}"
+                                  class="nav-link {{ Request::is('berkasTutup') ? 'active' : '' }}">
+                                  <i class="fas fa-minus nav-icon"></i>
+                                  <p>List Berkas Ditutup</p>
                               </a>
                           </li>
 
