@@ -214,7 +214,7 @@ class BerkasController extends Controller
 
         History::where('berkas_id', $berkas_id)->update(['selesai' => 1]);
 
-        History::create([
+        $history = History::create([
             'berkas_id' => $berkas_id,
             'proses_id' => $proses_id,
             'tgl' => date('Y-m-d'),
@@ -222,9 +222,31 @@ class BerkasController extends Controller
             'kembali' => 1
         ]);
 
+
         if ($proses_id == 14) {
             History::where('berkas_id', $berkas_id)->update(['selesai' => 1]);
         }
+
+        if ($proses_id == 5 || $proses_id == 7) {
+            $dt_history = History::where('berkas_id', $berkas_id)->where('proses_id', $proses_id)->orderBy('id', 'ASC')->first();
+            if ($dt_history) {
+
+                $dt_petugas = PetugasBerkas::where('history_id', $dt_history->id)->get();
+
+                foreach ($dt_petugas as $p) {
+                    PetugasBerkas::create([
+                        'berkas_id' => $berkas_id,
+                        'history_id' => $history->id,
+                        'proses_id' => $proses_id,
+                        'petugas_id' => $p->petugas_id,
+                        'tgl' => date('Y-m-d'),
+                        'user_id' => Auth::id(),
+                        'void' => 0
+                    ]);
+                }
+            }
+        }
+
 
         return true;
     }
@@ -290,5 +312,4 @@ class BerkasController extends Controller
             ->addIndexColumn()
             ->make(true);
     }
-
 }

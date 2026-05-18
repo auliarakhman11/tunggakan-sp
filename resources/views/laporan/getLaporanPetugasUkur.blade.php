@@ -46,7 +46,7 @@
                     $ttl_berkas += $d['ttl_berkas'];
                     $ttl_selesai += $d['ttl_selesai'];
                     $ttl_tutup += $d['ttl_tutup'];
-                    $ttl_sisa += $d['ttl_berkas'] - ($d['ttl_selesai'] + $d['ttl_tutup']);
+                    $ttl_sisa += $d['ttl_berkas'] - $d['ttl_selesai'] - $d['ttl_tutup'];
 
                     $ttl_pemetaan += $d['ttl_pemetaan'];
                     $ttl_pelaksana += $d['ttl_pelaksana'];
@@ -59,7 +59,7 @@
                     <td>{{ $d['ttl_berkas'] }}</td>
                     <td>{{ $d['ttl_selesai'] }}</td>
                     <td>{{ $d['ttl_tutup'] }}</td>
-                    <td>{{ $d['ttl_berkas'] - ($d['ttl_selesai'] + $d['ttl_tutup']) }}</td>
+                    <td>{{ $d['ttl_berkas'] - $d['ttl_selesai'] - $d['ttl_tutup'] }}</td>
                     @php
                         $tot_pu = 0;
                     @endphp

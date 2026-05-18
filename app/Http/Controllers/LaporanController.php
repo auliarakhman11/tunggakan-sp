@@ -405,7 +405,17 @@ class LaporanController extends Controller
 
     public function getDetailLaporanPu(Request $request)
     {
-        $dt_history = PetugasBerkas::select('berkas.tgl', 'proses.nm_proses', 'berkas.no_berkas', 'berkas.tahun', 'berkas.nm_pemohon', 'berkas.jenis_kegiatan', 'berkas.kelurahan', 'petugas.nm_petugas')->leftJoin('proses', 'petugas_berkas.proses_id', '=', 'proses.id')->leftJoin('petugas', 'petugas_berkas.petugas_id', '=', 'petugas.id')->leftJoin('history', 'petugas_berkas.history_id', '=', 'history.id')->leftJoin('berkas', 'petugas_berkas.berkas_id', '=', 'berkas.id')->where('petugas_berkas.void', 0)->where('petugas_berkas.proses_id', 5)->where('history.selesai', 0)->whereYear('petugas_berkas.tgl', $request->tahun)->where('petugas_berkas.petugas_id', $request->petugas_id)->groupBy('petugas_berkas.berkas_id')->get();
+        $dt_history = PetugasBerkas::select('berkas.tgl', 'proses.nm_proses', 'berkas.no_berkas', 'berkas.tahun', 'berkas.nm_pemohon', 'berkas.jenis_kegiatan', 'berkas.kelurahan', 'petugas.nm_petugas')
+            ->leftJoin('proses', 'petugas_berkas.proses_id', '=', 'proses.id')
+            ->leftJoin('petugas', 'petugas_berkas.petugas_id', '=', 'petugas.id')
+            ->leftJoin('history', 'petugas_berkas.history_id', '=', 'history.id')
+            ->leftJoin('berkas', 'petugas_berkas.berkas_id', '=', 'berkas.id')
+            ->where('petugas_berkas.void', 0)
+            ->where('petugas_berkas.proses_id', 5)
+            ->where('history.selesai', 0)
+            ->whereYear('petugas_berkas.tgl', $request->tahun)
+            ->where('petugas_berkas.petugas_id', $request->petugas_id)
+            ->groupBy('petugas_berkas.berkas_id')->get();
 
         return view('laporan.getDetailLaporanPu', [
             'dt_history' => $dt_history,
