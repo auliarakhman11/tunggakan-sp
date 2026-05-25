@@ -300,6 +300,45 @@
         </div>
     </div>
 
+    <form id="form_kembali_berkas_petugas" enctype="multipart/form-data">
+        <div class="modal fade" id="modal_kembali_berkas_petugas" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h5 class="modal-title" id="exampleModalLabel">Lanjut Berkas</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="col-12">
+                                        <label for="">Tanggal</label>
+                                        <input class="form-control" type="date" value="{{ date('Y-m-d') }}"
+                                            name="tgl" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="table_kembali_berkas_petugas"></div>
+                        <div id="list_petugas_kembali"></div>
+                        <div id="button_table_tambah_pegawai_kembali"></div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="berkas_id" id="berkas_id_lanjut_petugas">
+                        <input type="hidden" name="proses_id" id="proses_id_lanjut_petugas">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="btn_kembali_berkas_petugas">Lanjut</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
 
 
 
@@ -912,6 +951,49 @@
                     var image = '<img src="' + url + file_name + '" class="img-fluid">';
                     $("#table_file").html(image);
                 }
+
+            });
+
+            var dt_proses_kembali = ['Korsub (Penunjukan ST)', 'Pelaksana', 'Kasi', 'Petugas Ukur',
+                'Pelaksana', 'Pemetaan', 'Pelaksana', 'Korsub', 'Pelaksana', 'Kasi', 'Pelaksana', 'Selesai'
+            ];
+
+            $(document).on('click', '#btn_kembali_berkas_petugas', function() {
+
+                var berkas_id = $(this).attr('berkas_id');
+                var proses_id = $(this).attr('proses_id');
+                var proses_selanjutnya = dt_proses_kembali[proses_id];
+
+
+                $('#berkas_id_lanjut_petugas').val(berkas_id);
+                $('#proses_id_lanjut_petugas').val(proses_id);
+
+                if (proses_id == 5 || proses_id == 7) {
+                    if (proses_id == 7) {
+                        $('#table_kembali_berkas_petugas').html(
+                            '<h4>Apakah anda yakin ingin mengembalikan berkas berkas ke ' +
+                            proses_selanjutnya +
+                            '?</h4> <div class="row"><div class="col-10"><div class="form-group"><label for="">Petugas</label><select name="petugas_id[]" class="form-control" required><option value="">Pilih Pegawai</option>@foreach ($petugas as $p)<option value="{{ $p->id }}">{{ $p->nm_petugas }}</option>@endforeach</select></div></div><div class="col-2"></div></div>'
+                        );
+                    } else {
+                        $('#table_kembali_berkas_petugas').html(
+                            '<h4>Apakah anda yakin ingin mengembalikan berkas berkas ke ' +
+                            proses_selanjutnya +
+                            '?</h4> <div class="row"><div class="col-12 mb-2"><div class="form-group"><label>Upload Surat Tugas</label><input type="file" name="file_name" class="form-control" accept="application/pdf, image/png, image/jpeg" required></div></div><div class="col-10"><div class="form-group"><label for="">Petugas</label><select name="petugas_id[]" class="form-control" required><option value="">Pilih Pegawai</option>@foreach ($petugas as $p)<option value="{{ $p->id }}">{{ $p->nm_petugas }}</option>@endforeach</select></div></div><div class="col-2"></div></div>'
+                        );
+                    }
+                    $('#list_petugas_kembali').html('');
+                    $('#button_table_tambah_pegawai_kembali').html(
+                        '<button class="btn btn-sm btn-success float-right" type="button" id="button_tambah_pegawai">+</button>'
+                    );
+                } else {
+                    $('#table_kembali_berkas_petugas').html(
+                        '<h4>Apakah anda yakin ingin mengembalikan berkas berkas ke ' +
+                        proses_selanjutnya + '?</h4>');
+                    $('#list_petugas_kembali').html('');
+                    $('#button_table_tambah_pegawai_kembali').html('');
+                }
+
 
             });
 

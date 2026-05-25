@@ -44,8 +44,8 @@ Route::middleware('auth')->group(function () {
     Route::get('berkasSelesai', [BerkasController::class, 'berkasSelesai'])->name('berkasSelesai');
     Route::get('getBerkasSelesai', [BerkasController::class, 'getBerkasSelesai'])->name('getBerkasSelesai');
 
-    Route::get('berkasTutup', [BerkasController::class,'berkasTutup'])->name('berkasTutup');
-    Route::get('getBerkasTutup', [BerkasController::class,'getBerkasTutup'])->name('getBerkasTutup');
+    Route::get('berkasTutup', [BerkasController::class, 'berkasTutup'])->name('berkasTutup');
+    Route::get('getBerkasTutup', [BerkasController::class, 'getBerkasTutup'])->name('getBerkasTutup');
     //endhome
 
     //laporan
@@ -86,6 +86,8 @@ Route::middleware('auth')->group(function () {
     Route::get('ganti-password', [UserController::class, 'gantiPassword'])->name('gantiPassword');
 
     Route::post('edit-password', [UserController::class, 'editPassword'])->name('editPassword');
+
+    Route::get('perbaikanPetugasUkur', [LaporanController::class, 'perbaikanPetugasUkur'])->name('perbaikanPetugasUkur');
 });
 
 

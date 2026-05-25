@@ -458,4 +458,29 @@ class LaporanController extends Controller
             'tahun' => $request->tahun,
         ]);
     }
+
+    public function perbaikanPetugasUkur()
+    {
+        $history = History::where('void', 0)->where('kembali', 1)->whereIn('proses_id', [5, 7])->with('petugasBerkas')->get();
+
+        foreach ($history as $h) {
+
+            if ($h->petugasBerkas->isEmpty()) {
+                $getDataPetugas = PetugasBerkas::where('void', 0)->where('berkas_id', $h->berkas_id)->where('proses_id', $h->proses_id)->groupBy('petugas_id')->get();
+                foreach ($getDataPetugas as $g) {
+                    PetugasBerkas::create([
+                        'berkas_id' => $h->berkas_id,
+                        'history_id' => $h->id,
+                        'proses_id' => $h->proses_id,
+                        'petugas_id' => $g->petugas_id,
+                        'tgl' => $h->tgl,
+                        'user_id' => $h->user_id,
+                        'void' => 0
+                    ]);
+                }
+            }
+        }
+
+        return 'ya';
+    }
 }
